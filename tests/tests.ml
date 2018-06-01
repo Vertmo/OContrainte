@@ -1,12 +1,8 @@
-open OUnit2;;
-
-let test1 test_ctxt = assert_equal "x" "x";;
-
-let test2 test_ctxt = assert_equal 100 100;;
+open OUnit2
+open DomainTests
 
 let suite =
   "suite">:::
-  ["test1">:: test1;
-   "test2">:: test2];;
+  [test_list DomainTests.suite]
 
-let () = run_test_tt_main suite;;
+let () = run_test_tt_main suite
