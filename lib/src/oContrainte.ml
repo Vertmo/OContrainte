@@ -9,3 +9,4 @@
 (** Main module *)
 
 module Domain = OCont_domain
+module Variable = OCont_variable
