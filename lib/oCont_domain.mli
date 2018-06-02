@@ -1,6 +1,6 @@
 (** Domain module : handle finite domains of integers *)
 
-(** Domain type : contains a collection of integers *)
+(** Domain type : contains a set of integers *)
 type dom
 
 (** An empty domain *)
@@ -10,12 +10,22 @@ val empty : dom
 val range : int -> int -> dom
 
 (** Number of elements of the domain *)
-val size : dom -> int
+val card : dom -> int
 
 (** Construct a domain from a list of elements *)
-val from_list : int list -> dom
+val fromList : int list -> dom
 
 (** Construct a domain from an array of elements *)
-val from_array : int array -> dom
+val fromArray : int array -> dom
 
 (** Add an element to a domain *)
+val add : dom -> int -> dom
+
+(** Remove an element from a domain *)
+val remove : dom -> int -> dom
+
+(** Smallest int in the domain *)
+val min : dom -> int option
+
+(** Biggest int in the domain *)
+val max : dom -> int option

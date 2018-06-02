@@ -6,3 +6,4 @@ doc:
 
 clean:
 	@rm -rf _build
+	@rm OContrainte.docdir
