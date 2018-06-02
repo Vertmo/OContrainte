@@ -1,4 +1,4 @@
-type t = int list
+type dom = int list
 
 let empty = []
 

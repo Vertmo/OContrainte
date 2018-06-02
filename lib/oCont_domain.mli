@@ -1,21 +1,21 @@
 (** Domain module : handle finite domains of integers *)
 
 (** Domain type : contains a collection of integers *)
-type t
+type dom
 
 (** An empty domain *)
-val empty : t
+val empty : dom
 
 (** A domain containing all the integers between start (included) and stop (excluded) *)
-val range : int -> int -> t
+val range : int -> int -> dom
 
 (** Number of elements of the domain *)
-val size : t -> int
+val size : dom -> int
 
 (** Construct a domain from a list of elements *)
-val from_list : int list -> t
+val from_list : int list -> dom
 
 (** Construct a domain from an array of elements *)
-val from_array : int array -> t
+val from_array : int array -> dom
 
 (** Add an element to a domain *)
