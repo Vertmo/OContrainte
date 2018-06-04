@@ -1,13 +1,13 @@
 open OCont_variable
 
-type intExpr = IntConst of int (** integer constant *)
-             | Var of var ref (** reference on a variable defined by the user *)
-             | IntBinOp of (int -> int -> int) * intExpr * intExpr (** +, *, /, -, ...*)
+type intExpr = IntConst of int
+             | Var of var ref
+             | IntBinOp of (int -> int -> int) * intExpr * intExpr
 
-type boolExpr = BoolConst of bool (** boolean constant *)
-              | Comparator of (int -> int -> bool) * intExpr * intExpr (** =, <, >=, ... *)
-              | BoolUnOp of (bool -> bool) * boolExpr (** not *)
-              | BoolBinOp of (bool -> bool -> bool) * boolExpr * boolExpr (** &&, ||, ... *)
+type boolExpr = BoolConst of bool
+              | Comparator of (int -> int -> bool) * intExpr * intExpr
+              | BoolUnOp of (bool -> bool) * boolExpr
+              | BoolBinOp of (bool -> bool -> bool) * boolExpr * boolExpr
 
 let rec allVarsI e = match e with
   | IntConst _ -> []

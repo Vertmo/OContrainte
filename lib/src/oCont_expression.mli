@@ -10,7 +10,7 @@ type intExpr = IntConst of int (** integer constant *)
 (** Expression that evaluates to a boolean *)
 type boolExpr = BoolConst of bool
               | Comparator of (int -> int -> bool) * intExpr * intExpr (** =, <, >=, ... *)
-              | BoolUnOp of (bool -> bool) * boolExpr (** not *)
+              | BoolUnOp of (bool -> bool) * boolExpr (** not, ... *)
               | BoolBinOp of (bool -> bool -> bool) * boolExpr * boolExpr (** &&, ||, ... *)
 
 
