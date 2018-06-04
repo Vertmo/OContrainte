@@ -1,7 +1,7 @@
 open OCont_variable
 
 type intExpr = IntConst of int
-             | Var of var ref
+             | Var of var
              | IntBinOp of (int -> int -> int) * intExpr * intExpr
 
 type boolExpr = BoolConst of bool
@@ -23,7 +23,7 @@ let rec allVarsB e = match e with
 let rec evalI e = match e with
   | IntConst n -> n
   | IntBinOp (f, e1, e2) -> f (evalI e1) (evalI e2)
-  | Var v -> match (value !v) with
+  | Var v -> match (value v) with
     | None -> raise (Failure "not all variables are assigned in this expr !")
     | Some n -> n
 

@@ -21,12 +21,12 @@ let testSolve3 test_ctxt =
   let var1 = Variable.create (Domain.fromList [1;2;3;4;5]) in
   let var2 = Variable.create (Domain.fromList [4;5;7]) in
   let cstr1 = Constraint.create (Comparator ((>),
-                                             (Var (ref var2)),
+                                             (Var var2),
                                              (IntConst 6))) in
   let cstr2 = Constraint.create (Comparator ((=),
                                              (IntBinOp ((+),
-                                                        (Var (ref var1)),
-                                                        (Var (ref var2)))),
+                                                        (Var var1),
+                                                        (Var var2))),
                                              (IntConst 10))) in
   assert_equal (Solver.solve [var1; var2] [cstr1; cstr2]) true;
   assert_equal (Variable.value var1) (Some 3);

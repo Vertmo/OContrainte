@@ -11,8 +11,8 @@ let () =
     for j = 0 to i-1 do
       constrs := (Constraint.create
                     (Comparator ((<>),
-                                 (Var (ref (List.nth vars i))),
-                                 (Var (ref (List.nth vars j))))))::!constrs
+                                 (Var (List.nth vars i)),
+                                 (Var (List.nth vars j)))))::!constrs
     done
   done;
 
@@ -22,14 +22,14 @@ let () =
       constrs := (Constraint.create
                     (BoolBinOp ((&&),
                                 (Comparator ((<>),
-                                             (Var (ref (List.nth vars i))),
+                                             (Var (List.nth vars i)),
                                              (IntBinOp ((+),
-                                                        (Var (ref (List.nth vars j))),
+                                                        (Var (List.nth vars j)),
                                                         (IntConst (i - j)))))),
                                 (Comparator ((<>),
-                                             (Var (ref (List.nth vars i))),
+                                             (Var (List.nth vars i)),
                                              (IntBinOp ((-),
-                                                        (Var (ref (List.nth vars j))),
+                                                        (Var (List.nth vars j)),
                                                         (IntConst (i - j)))))))))::!constrs
     done
   done;

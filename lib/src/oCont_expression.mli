@@ -4,7 +4,7 @@ open OCont_variable
 
 (** Expression that evaluates to an integer *)
 type intExpr = IntConst of int (** integer constant *)
-             | Var of var ref (** reference on a variable defined by the user *)
+             | Var of var (** reference on a variable defined by the user *)
              | IntBinOp of (int -> int -> int) * intExpr * intExpr (** +, *, /, -, ...*)
 
 (** Expression that evaluates to a boolean *)
@@ -15,10 +15,10 @@ type boolExpr = BoolConst of bool
 
 
 (** All variables in an integer expression *)
-val allVarsI : intExpr -> var ref list
+val allVarsI : intExpr -> var list
 
 (** All variables in a boolean expression *)
-val allVarsB : boolExpr -> var ref list
+val allVarsB : boolExpr -> var list
 
 (** Evaluate an integer expression *)
 val evalI : intExpr -> int
