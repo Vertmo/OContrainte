@@ -18,6 +18,9 @@ val fromList : int list -> dom
 (** Construct a domain from an array of elements *)
 val fromArray : int array -> dom
 
+(** Get the list of elements contained in the domain *)
+val asList : dom -> int list
+
 (** Add an element to a domain *)
 val add : dom -> int -> dom
 

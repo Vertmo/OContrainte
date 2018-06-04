@@ -15,6 +15,8 @@ let fromList l = List.sort_uniq (-) l
 
 let fromArray a = List.sort_uniq (-) (Array.to_list a)
 
+let asList d = d
+
 let add d n = List.sort_uniq (-) (n::d)
 
 let rec remove d n = match d with

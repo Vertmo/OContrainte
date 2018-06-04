@@ -1,5 +1,5 @@
 open OUnit2
-open OContrainte;;
+open OContrainte
 
 let testEmpty test_ctxt = assert_equal (Domain.card (Domain.empty)) 0
 
@@ -26,17 +26,17 @@ let testMax1 test_ctxt = assert_equal (Domain.max (Domain.fromList [3;6;4;2])) (
 let testMax2 test_ctxt = assert_equal (Domain.max Domain.empty) None
 
 
-let suite =
-  ["empty">::testEmpty;
-   "range">::testRange;
-   "fromList">::testFromList;
-   "fromArray">::testFromArray;
-   "add1">::testAdd1;
-   "add2">::testAdd2;
-   "remove1">::testRemove1;
-   "remove2">::testRemove2;
-   "min1">::testMin1;
-   "min2">::testMin2;
-   "max1">::testMax1;
-   "max2">::testMax2;
-  ]
+let suite =[
+  "empty">::testEmpty;
+  "range">::testRange;
+  "fromList">::testFromList;
+  "fromArray">::testFromArray;
+  "add1">::testAdd1;
+  "add2">::testAdd2;
+  "remove1">::testRemove1;
+  "remove2">::testRemove2;
+  "min1">::testMin1;
+  "min2">::testMin2;
+  "max1">::testMax1;
+  "max2">::testMax2;
+]

@@ -1,11 +1,17 @@
 # OContrainte #
 A constraint programming library for OCaml, optimized for microcontrollers
 
+## Dependencies ##
+* GNU Make
+* ocamlbuild
+* OUnit2
+
 ## Usage ##
-... TODO
+* `make` to compile everything
+* `make tests` to execute unit tests
 
 ## Documentation ##
-... TODO
+You can generate the library documentation with `make doc` inside the *lib/* directory. The doc is then generated as html pages inside the *OContrainte.docdir/* directory.
 
 ## Relevant Links ##
 * Inspired from [FaCiL](https://github.com/Emmanuel-PLF/facile)
