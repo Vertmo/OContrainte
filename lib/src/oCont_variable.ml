@@ -5,6 +5,8 @@ type var = {
 
 let create d = { domain = d; value = None; }
 
+let domain v = v.domain
+
 let assign v n =
   if List.exists (fun e -> e = n) (OCont_domain.asList v.domain)
   then v.value <- Some n

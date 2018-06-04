@@ -10,3 +10,5 @@ let isConsistent c =
   if List.fold_left (fun a -> fun v -> a && isAssigned !v) true varRefs
   then evalB c
   else true
+
+let areConsistent constrs = List.fold_left (fun a -> fun c -> a && isConsistent c) true constrs

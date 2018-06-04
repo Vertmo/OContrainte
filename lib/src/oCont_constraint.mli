@@ -10,3 +10,6 @@ val create : boolExpr -> constr
 
 (** A constraint is consistent if it's boolean expression evaluates to true or at least one of the variable in this expression is not assigned *)
 val isConsistent : constr -> bool
+
+(** Check if a list of constraints are all consistent *)
+val areConsistent : constr list -> bool
