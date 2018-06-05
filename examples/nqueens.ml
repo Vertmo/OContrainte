@@ -3,7 +3,8 @@ open OContrainte.Expression
 
 let () =
   let n = 8 in
-  let vars = List.map (fun _ -> Variable.create (Domain.range 0 n)) (Domain.asList (Domain.range 0 n)) in
+  let d = Domain.range 0 n in
+  let vars = List.map (fun _ -> Variable.create d) (Domain.asList d) in
   let constrs = ref [] in
 
   (* Queens are on different rows *)

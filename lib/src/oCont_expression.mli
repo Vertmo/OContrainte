@@ -5,7 +5,9 @@ open OCont_variable
 (** Expression that evaluates to an integer *)
 type intExpr = IntConst of int (** integer constant *)
              | Var of var (** reference on a variable defined by the user *)
-             | IntBinOp of (int -> int -> int) * intExpr * intExpr (** +, *, /, -, ...*)
+             | IntUnOp of (int -> int) * intExpr (* -, ... *)
+             | IntBinOp of (int -> int -> int) * intExpr * intExpr (** +, *, /, -, ... *)
+             | IntMultiOp of (int list -> int) * intExpr list (** reduce (+) 0, ... *)
 
 (** Expression that evaluates to a boolean *)
 type boolExpr = BoolConst of bool

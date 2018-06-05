@@ -2,7 +2,9 @@ open OCont_variable
 
 type intExpr = IntConst of int
              | Var of var
+             | IntUnOp of (int -> int) * intExpr
              | IntBinOp of (int -> int -> int) * intExpr * intExpr
+             | IntMultiOp of (int list -> int) * intExpr list
 
 type boolExpr = BoolConst of bool
               | Comparator of (int -> int -> bool) * intExpr * intExpr
@@ -12,7 +14,9 @@ type boolExpr = BoolConst of bool
 let rec allVarsI e = match e with
   | IntConst _ -> []
   | Var v -> [v]
+  | IntUnOp (_, e1) -> allVarsI e1
   | IntBinOp (_, e1, e2) -> (allVarsI e1)@(allVarsI e2)
+  | IntMultiOp (_, es) -> List.flatten (List.map allVarsI es)
 
 let rec allVarsB e = match e with
   | BoolConst _ -> []
@@ -22,7 +26,9 @@ let rec allVarsB e = match e with
 
 let rec evalI e = match e with
   | IntConst n -> n
+  | IntUnOp (f, e1) -> f (evalI e1)
   | IntBinOp (f, e1, e2) -> f (evalI e1) (evalI e2)
+  | IntMultiOp (f, es) -> f (List.map evalI es)
   | Var v -> match (value v) with
     | None -> raise (Failure "not all variables are assigned in this expr !")
     | Some n -> n

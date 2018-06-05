@@ -64,6 +64,11 @@ let testEval4 test_ctxt =
   Variable.assign var2 4;
   assert_equal (evalB expr) true
 
+let testEval5 test_ctxt =
+  let expr = (IntMultiOp ((List.fold_left (+) 2),
+                          [(IntConst 3); (IntConst 4); (IntConst 5)])) in
+  assert_equal (evalI expr) 14
+
 let suite = [
   "allVars1">::testAllVars1;
   "allVars2">::testAllVars2;
@@ -75,4 +80,5 @@ let suite = [
   "eval2">::testEval2;
   "eval3">::testEval3;
   "eval4">::testEval4;
+  "eval5">::testEval5;
 ]
