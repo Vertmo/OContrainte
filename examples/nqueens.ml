@@ -1,14 +1,15 @@
 open OContrainte
 open OContrainte.Expression
 
+let n = 8
+
 let () =
-  let n = 8 in
   let d = Domain.range 0 n in
   let vars = List.map (fun _ -> Variable.create d) (Domain.asList d) in
   let constrs = ref [] in
 
   (* Queens are on different rows *)
-  for i = 1 to n-1 do
+  for i = 0 to n-1 do
     for j = 0 to i-1 do
       constrs := (Constraint.create
                     (Comparator ((<>),
@@ -38,11 +39,11 @@ let () =
   if not (Solver.solve vars !constrs)
   then print_endline "We didn't find a solution..."
   else begin
-    print_endline "We found a solution, here it is :";
+    print_endline "We found a solution :";
     for i = 0 to n-1 do
       print_string "["; print_int i; print_string ",";
       match (Variable.value (List.nth vars i)) with
       |Some n -> print_int n; print_endline "]"
-      |None -> print_int 0; print_endline "]"
+      |None -> print_endline "?]"
     done
   end
