@@ -24,6 +24,20 @@ let rec allVarsB e = match e with
   | BoolUnOp (_, e1) -> allVarsB e1
   | BoolBinOp (_, e1, e2) -> (allVarsB e1)@(allVarsB e2)
 
+let rec allAssignedI e = match e with
+  | IntConst _ -> true
+  | Var v when value v = None -> false
+  | Var v -> true
+  | IntUnOp (_, e1) -> allAssignedI e1
+  | IntBinOp (_, e1, e2) -> allAssignedI e1 && allAssignedI e2
+  | IntMultiOp (_, es) -> List.fold_left (fun a -> fun e -> a && allAssignedI e) true es
+
+let rec allAssignedB e = match e with
+  | BoolConst _ -> true
+  | Comparator (_, e1, e2) -> allAssignedI e1 && allAssignedI e2
+  | BoolUnOp (_, e1) -> allAssignedB e1
+  | BoolBinOp (_, e1, e2) -> allAssignedB e1 && allAssignedB e2
+
 let rec evalI e = match e with
   | IntConst n -> n
   | IntUnOp (f, e1) -> f (evalI e1)

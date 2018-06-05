@@ -16,11 +16,17 @@ type boolExpr = BoolConst of bool
               | BoolBinOp of (bool -> bool -> bool) * boolExpr * boolExpr (** &&, ||, ... *)
 
 
-(** All variables in an integer expression *)
+(** All the variables in an integer expression *)
 val allVarsI : intExpr -> var list
 
-(** All variables in a boolean expression *)
+(** All the variables in a boolean expression *)
 val allVarsB : boolExpr -> var list
+
+(** All the variables in this integer expression are assigned *)
+val allAssignedI : intExpr -> bool
+
+(** All the variables in this boolean expression are assigned *)
+val allAssignedB : boolExpr -> bool
 
 (** Evaluate an integer expression *)
 val evalI : intExpr -> int
