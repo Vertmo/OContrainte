@@ -1,0 +1,17 @@
+lib : [
+    "META" {"META"}
+    "opam" {"opam"}
+    "_build/OContrainte.cma"
+    "_build/src/oContrainte.cmi"
+    "_build/src/oContrainte.mli"
+    "_build/src/oCont_domain.cmi"
+    "_build/src/oCont_domain.mli"
+    "_build/src/oCont_variable.cmi"
+    "_build/src/oCont_variable.mli"
+    "_build/src/oCont_expression.cmi"
+    "_build/src/oCont_expression.mli"
+    "_build/src/oCont_constraint.cmi"
+    "_build/src/oCont_constraint.mli"
+    "_build/src/oCont_solver.cmi"
+    "_build/src/oCont_solver.mli"
+]

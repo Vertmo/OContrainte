@@ -1,0 +1,16 @@
+opam-version: "1.2"
+name: "ocontrainte"
+version: "1.0.0"
+maintainer: "Basile Pesin <basile.pesin@gmail.com>"
+authors: "Basile Pesin <basile.pesin@gmail.com>"
+homepage: "https://github.com/Vertmo/OContrainte"
+bug-reports: "https://github.com/Vertmo/OContrainte/issues"
+license: "GNU General Public Licence v3.0"
+dev-repo: "https://github.com/Vertmo/OContrainte"
+build: [
+  [make]
+]
+depends: [
+  "ocamlfind" {build}
+  "ocamlbuild" {build}
+]
