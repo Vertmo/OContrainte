@@ -20,7 +20,7 @@ let () =
 
   (* Rows equal to magicTotal *)
   for i = 0 to n-1 do
-    let row = List.map (fun j -> (List.nth vars (i*4+j))) (Domain.asList (Domain.range 0 n)) in
+    let row = List.map (fun j -> (List.nth vars (i*n+j))) (Domain.asList (Domain.range 0 n)) in
     constrs := (Constraint.create (Comparator ((=),
                                                (IntMultiOp ((List.fold_left (+) 0),
                                                             (List.map (fun v -> Var v) row))),
@@ -29,7 +29,7 @@ let () =
 
   (* Columns equal to magicTotal *)
   for i = 0 to n-1 do
-    let column = List.map (fun j -> (List.nth vars (j*4+i))) (Domain.asList (Domain.range 0 n)) in
+    let column = List.map (fun j -> (List.nth vars (j*n+i))) (Domain.asList (Domain.range 0 n)) in
     constrs := (Constraint.create (Comparator ((=),
                                                (IntMultiOp ((List.fold_left (+) 0),
                                                             (List.map (fun v -> Var v) column))),
@@ -37,8 +37,8 @@ let () =
   done;
 
   (* Diagonals equal to magicTotal *)
-  let diag1 = List.map (fun i -> (List.nth vars (i*4+i))) (Domain.asList (Domain.range 0 n))
-  and diag2 = List.map (fun i -> (List.nth vars (i*4 + 3 - i))) (Domain.asList (Domain.range 0 n)) in
+  let diag1 = List.map (fun i -> (List.nth vars (i*n+i))) (Domain.asList (Domain.range 0 n))
+  and diag2 = List.map (fun i -> (List.nth vars (i*n + (n-1) - i))) (Domain.asList (Domain.range 0 n)) in
 
   constrs := (Constraint.create (BoolBinOp ((&&),
                                             (Comparator ((=),
