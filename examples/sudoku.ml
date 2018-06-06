@@ -69,10 +69,8 @@ let () =
     for i = 0 to 9-1 do
       for j = 0 to 9-1 do
         print_string " ";
-        match (Variable.value (List.nth vars (9*i+j))) with
-        | Some v when v < 10 -> print_int v; print_string "  "
-        | Some v -> print_int v; print_string " "
-        | None -> print_string "? ";
+        Variable.print_var (List.nth vars (9*i+j));
+        print_string " ";
       done;
       print_endline ""
     done;

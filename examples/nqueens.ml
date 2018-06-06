@@ -42,8 +42,6 @@ let () =
     print_endline "We found a solution :";
     for i = 0 to n-1 do
       print_string "["; print_int i; print_string ",";
-      match (Variable.value (List.nth vars i)) with
-      |Some n -> print_int n; print_endline "]"
-      |None -> print_endline "?]"
+      Variable.print_var (List.nth vars i); print_endline "]"
     done
   end

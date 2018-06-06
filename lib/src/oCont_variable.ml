@@ -19,3 +19,7 @@ let isAssigned v = match v.value with
   | Some _ -> true
 
 let value v = v.value
+
+let print_var v = match v.value with
+  | Some n -> print_int n
+  | None -> print_string "?"
