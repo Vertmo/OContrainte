@@ -1,0 +1,3 @@
+[submodule "OMicroB"]
+	path = OMicroB
+    url = git@github.com:Vertmo/OMicroB.git
