@@ -37,11 +37,5 @@ let () =
   done;
   (*Variable.assign (List.nth vars 0) 3;*)
   if not (Solver.solve vars !constrs)
-  then print_endline "We didn't find a solution..."
-  else begin
-    print_endline "We found a solution :";
-    for i = 0 to n-1 do
-      print_string "["; print_int i; print_string ",";
-      Variable.print_var (List.nth vars i); print_endline "]"
-    done
-  end
+  then ()
+  else ()
