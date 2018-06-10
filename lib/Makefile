@@ -1,8 +1,10 @@
+include ../OMicroB/etc/Makefile.conf
+
 compile:
-	ocamlbuild OContrainte.cma -I src
+	CAMLLIB=$(LIB) ocamlbuild OContrainte.cma -I src
 
 doc:
-	ocamlbuild OContrainte.docdir/index.html -I src
+	CAMLLIB=$(LIB) ocamlbuild OContrainte.docdir/index.html -I src
 
 clean:
 	ocamlbuild -clean

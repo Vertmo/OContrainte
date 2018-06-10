@@ -1,6 +1,8 @@
+open Avr
 open OContrainte
 open OContrainte.Expression
 
+let g = PIN11 and r = PIN10
 let n = 8
 
 let () =
@@ -37,5 +39,5 @@ let () =
   done;
   (*Variable.assign (List.nth vars 0) 3;*)
   if not (Solver.solve vars !constrs)
-  then ()
-  else ()
+  then digital_write g HIGH
+  else digital_write r HIGH

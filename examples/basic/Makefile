@@ -1,14 +1,11 @@
 include ../../OMicroB/etc/Makefile.conf
 
-TARGETS = basic.c basic.elf basic.avr basic.hex
+TARGETS = basic.byte basic.c basic.elf basic.avr basic.hex
 
 all: $(TARGETS)
 
-compile: basic.ml
-	ocamlbuild basic.byte -I lib/src
-
-$(TARGETS): compile
-	$(BIN)/omicrob -v basic.ml -mlopt -I lib/src
+$(TARGETS): basic.ml
+	$(BIN)/omicrob -v basic.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src
 
 flash: basic.hex
 	$(BIN)/omicrob -flash -sudo $<

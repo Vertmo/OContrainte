@@ -1,7 +1,10 @@
+open Avr
 open OContrainte
 open OContrainte.Expression
 
 (** https://en.wikipedia.org/wiki/Verbal_arithmetic *)
+
+let green = PIN11 and red = PIN10
 
 let () =
   let dom = Domain.range 0 10 in
@@ -37,5 +40,5 @@ let () =
                                              (IntMultiOp (sumBaseTen, money)))))::!constrs;
 
   if not (Solver.solve vars !constrs)
-  then ()
-  else ()
+  then digital_write green HIGH
+  else digital_write red HIGH
