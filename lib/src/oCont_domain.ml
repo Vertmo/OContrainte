@@ -1,34 +1,46 @@
-type dom = int list
+type dom = Range of int * int | Arr of int array
 
-let empty = []
+let empty = Arr [||]
 
 let rec range start stop =
-  if start > stop then invalid_arg "interval";
-  if start >= stop
-  then []
-  else start :: (range (start + 1) stop)
+  if start > stop then invalid_arg "range";
+  Range (start, stop)
 
-let card d =
-  List.length d
+let fromList l = Arr (Array.of_list (List.sort_uniq (-) l))
 
-let fromList l = List.sort_uniq (-) l
+let fromArray a = Arr (Array.of_list (List.sort_uniq (-) (Array.to_list a)))
 
-let fromArray a = List.sort_uniq (-) (Array.to_list a)
+let asList d = match d with
+  | Range (start,stop) -> let rec aux k n acc =
+                            if k > n then acc else aux k (n-1) (n :: acc)
+    in aux start (stop-1) []
+  | Arr a -> Array.to_list a
 
-let asList d = d
+let card d = match d with
+  | Range (start, stop) -> stop - start
+  | Arr a -> Array.length a
 
-let add d n = List.sort_uniq (-) (n::d)
+let add d n = match d with
+  | Range (start, stop) when n >= start && n < stop -> d
+  | Range (start, stop) when n < start -> Arr (Array.of_list (n::(asList d)))
+  | Range (start, stop) -> Arr (Array.of_list ((asList d)@[n]))
+  | Arr a -> Arr (Array.of_list (List.sort_uniq (-) (n::(Array.to_list a))))
 
 let rec remove d n = match d with
-  | [] -> []
-  | t::q when t = n -> q
-  | t::q -> t::(remove q n)
+  | Range (start, stop) when n < start || n >= stop -> d
+  | Range (start, stop) -> Arr (Array.of_list ((asList (Range (start,n)))@(asList (Range (n+1,stop)))))
+  | Arr a -> Arr (Array.of_list (List.filter (fun e -> e <> n) (Array.to_list a)))
 
 let min d = match d with
-  | [] -> None
-  | t::q -> Some t
+  | Range (start, stop) -> Some start
+  | Arr [||] -> None
+  | Arr a -> Some a.(0)
 
 let rec max d = match d with
-  | [] -> None
-  | t :: [] -> Some t
-  | t :: q -> max q
+  | Range (start, stop) -> Some stop
+  | Arr [||] -> None
+  | Arr a -> Some a.(Array.length a - 1)
+
+let contains d n = match d with
+  | Range (start, stop) -> n >= start && n < stop
+  | Arr a -> Array.exists (fun e -> e = n) a

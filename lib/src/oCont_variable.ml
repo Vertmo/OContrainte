@@ -8,7 +8,7 @@ let create d = { domain = d; value = None; }
 let domain v = v.domain
 
 let assign v n =
-  if List.exists (fun e -> e = n) (OCont_domain.asList v.domain)
+  if OCont_domain.contains v.domain n
   then v.value <- Some n
   else invalid_arg "value_not_in_domain"
 
