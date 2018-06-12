@@ -5,9 +5,11 @@ let testEmpty test_ctxt = assert_equal (Domain.card (Domain.empty)) 0
 
 let testRange test_ctxt = assert_equal (Domain.card (Domain.range 3 7)) 4
 
-let testFromList test_ctxt = assert_equal (Domain.range 3 7) (Domain.fromList [5;4;4;6;3;4])
+let testAsList test_ctxt = assert_equal (Domain.asList (Domain.range 0 1)) [0]
 
-let testFromArray test_ctxt = assert_equal (Domain.range 3 7) (Domain.fromArray [|4;3;5;6;4|])
+let testFromList test_ctxt = assert_equal (Domain.asList (Domain.range 3 7)) (Domain.asList (Domain.fromList [5;4;4;6;3;4]))
+
+let testFromArray test_ctxt = assert_equal (Domain.asList (Domain.range 3 7)) (Domain.asList (Domain.fromArray [|4;3;5;6;4|]))
 
 let testAdd1 test_ctxt = assert_equal (Domain.add (Domain.range 3 5) 2) (Domain.fromList [2;3;4])
 
@@ -26,9 +28,10 @@ let testMax1 test_ctxt = assert_equal (Domain.max (Domain.fromList [3;6;4;2])) (
 let testMax2 test_ctxt = assert_equal (Domain.max Domain.empty) None
 
 
-let suite =[
+let suite = [
   "empty">::testEmpty;
   "range">::testRange;
+  "asList">::testAsList;
   "fromList">::testFromList;
   "fromArray">::testFromArray;
   "add1">::testAdd1;
