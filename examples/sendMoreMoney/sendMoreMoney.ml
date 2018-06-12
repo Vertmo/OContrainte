@@ -7,6 +7,7 @@ open OContrainte.Expression
 let green = PIN11 and red = PIN10
 
 let () =
+  let _ = digital_read PIN7 in
   let dom = Domain.range 0 10 in
   let s = Variable.create dom and e = Variable.create dom and n = Variable.create dom
   and d = Variable.create dom and m = Variable.create dom and o = Variable.create dom
