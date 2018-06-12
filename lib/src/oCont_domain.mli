@@ -32,3 +32,6 @@ val min : dom -> int option
 
 (** Biggest int in the domain *)
 val max : dom -> int option
+
+(** Checks if the domains contains a value *)
+val contains : dom -> int -> bool

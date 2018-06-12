@@ -32,3 +32,5 @@ let rec max d = match d with
   | [] -> None
   | t :: [] -> Some t
   | t :: q -> max q
+
+let contains d n = List.exists (fun e -> e = n) (asList d)
