@@ -40,6 +40,6 @@ let () =
                                                         (IntMultiOp (sumBaseTen, more)))),
                                              (IntMultiOp (sumBaseTen, money)))))::!constrs;
 
-  if not (Solver.solve vars !constrs)
+  if Solver.solve vars !constrs
   then digital_write green HIGH
   else digital_write red HIGH

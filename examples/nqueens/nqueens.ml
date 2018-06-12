@@ -38,6 +38,6 @@ let () =
     done
   done;
   (*Variable.assign (List.nth vars 0) 3;*)
-  if not (Solver.solve vars !constrs)
+  if Solver.solve vars !constrs
   then digital_write g HIGH
   else digital_write r HIGH
