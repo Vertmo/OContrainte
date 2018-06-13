@@ -2,9 +2,7 @@ open Avr
 open OContrainte
 open OContrainte.Expression
 
-
 let g = PIN11 and r = PIN10
-
 
 let () =
   let _ = digital_read PIN7 in
