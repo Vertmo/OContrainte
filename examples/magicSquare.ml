@@ -10,18 +10,12 @@ let () =
   let constrs = ref [] in
 
   (* All variables are different *)
-  for i = 0 to n*n-1 do
-    for j = 0 to i-1 do
-      constrs := (Constraint.create (Comparator ((<>),
-                                                 (Var (List.nth vars i)),
-                                                 (Var (List.nth vars j)))))::!constrs
-    done
-  done;
+  constrs := (Constraint.AllDifferent vars)::!constrs;
 
   (* Rows equal to magicTotal *)
   for i = 0 to n-1 do
     let row = List.map (fun j -> (List.nth vars (i*n+j))) (Domain.asList (Domain.range 0 n)) in
-    constrs := (Constraint.create (Comparator ((=),
+    constrs := (Constraint.BoolConstr (Comparator ((=),
                                                (IntMultiOp ((List.fold_left (+) 0),
                                                             (List.map (fun v -> Var v) row))),
                                                (IntConst magicTotal))))::!constrs
@@ -30,7 +24,7 @@ let () =
   (* Columns equal to magicTotal *)
   for i = 0 to n-1 do
     let column = List.map (fun j -> (List.nth vars (j*n+i))) (Domain.asList (Domain.range 0 n)) in
-    constrs := (Constraint.create (Comparator ((=),
+    constrs := (Constraint.BoolConstr (Comparator ((=),
                                                (IntMultiOp ((List.fold_left (+) 0),
                                                             (List.map (fun v -> Var v) column))),
                                                (IntConst magicTotal))))::!constrs
@@ -40,7 +34,7 @@ let () =
   let diag1 = List.map (fun i -> (List.nth vars (i*n+i))) (Domain.asList (Domain.range 0 n))
   and diag2 = List.map (fun i -> (List.nth vars (i*n + (n-1) - i))) (Domain.asList (Domain.range 0 n)) in
 
-  constrs := (Constraint.create (BoolBinOp ((&&),
+  constrs := (Constraint.BoolConstr (BoolBinOp ((&&),
                                             (Comparator ((=),
                                                          (IntMultiOp ((List.fold_left (+) 0),
                                                                       (List.map (fun v -> Var v) diag1))),

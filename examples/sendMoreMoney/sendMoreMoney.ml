@@ -17,24 +17,18 @@ let () =
   let constrs = ref [] in
 
   (* Most significative numbers (m and s) are not 0 *)
-  constrs := (Constraint.create (Comparator ((<>), (Var m), (IntConst 0))))::!constrs;
-  constrs := (Constraint.create (Comparator ((<>), (Var s), (IntConst 0))))::!constrs;
+  constrs := (Constraint.BoolConstr (Comparator ((<>), (Var m), (IntConst 0))))::!constrs;
+  constrs := (Constraint.BoolConstr (Comparator ((<>), (Var s), (IntConst 0))))::!constrs;
 
   (* Each letter has a different value *)
-  for i = 0 to (List.length vars - 1) do
-    for j = 0 to i-1 do
-      constrs := (Constraint.create (Comparator ((<>),
-                                                 (Var (List.nth vars i)),
-                                                 (Var (List.nth vars j)))))::!constrs;
-    done
-  done;
+  constrs := (Constraint.AllDifferent vars)::!constrs;
 
   (* Sum *)
   let send = List.map (fun v -> Var v) [s;e;n;d]
   and more = List.map (fun v -> Var v) [m;o;r;e]
   and money = List.map (fun v -> Var v)[m;o;n;e;y] in
   let sumBaseTen = (List.fold_left (fun a -> fun e -> 10*a+e) 0) in
-  constrs := (Constraint.create (Comparator ((=),
+  constrs := (Constraint.BoolConstr (Comparator ((=),
                                              (IntBinOp ((+),
                                                         (IntMultiOp (sumBaseTen, send)),
                                                         (IntMultiOp (sumBaseTen, more)))),
