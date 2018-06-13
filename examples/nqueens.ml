@@ -9,19 +9,12 @@ let () =
   let constrs = ref [] in
 
   (* Queens are on different rows *)
-  for i = 0 to n-1 do
-    for j = 0 to i-1 do
-      constrs := (Constraint.create
-                    (Comparator ((<>),
-                                 (Var (List.nth vars i)),
-                                 (Var (List.nth vars j)))))::!constrs
-    done
-  done;
+  constrs := (Constraint.AllDifferent vars)::!constrs;
 
   (* Diagonals *)
   for i = 1 to n-1 do
     for j = 0 to i-1 do
-      constrs := (Constraint.create
+      constrs := (Constraint.BoolConstr
                     (BoolBinOp ((&&),
                                 (Comparator ((<>),
                                              (Var (List.nth vars i)),

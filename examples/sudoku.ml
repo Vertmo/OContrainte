@@ -19,35 +19,20 @@ let () =
 
   (* Rows *)
   for i = 0 to 9-1 do
-    for j = 0 to 9-1 do
-      for k = 0 to j-1 do
-        constrs := (Constraint.create (Comparator ((<>),
-                                                   (Var (List.nth vars (index j i))),
-                                                   (Var (List.nth vars (index k i))))))::!constrs
-      done
-    done
+    let row = List.map (fun j -> List.nth vars (index i j)) [0;1;2;3;4;5;6;7;8] in
+    constrs := (Constraint.AllDifferent row)::!constrs
   done;
 
   (* Columns *)
-  for i = 0 to 9-1 do
-    for j = 0 to 9-1 do
-      for k = 0 to j-1 do
-        constrs := (Constraint.create (Comparator ((<>),
-                                                   (Var (List.nth vars (index i j))),
-                                                   (Var (List.nth vars (index i k))))))::!constrs
-      done
-    done
+  for j = 0 to 9-1 do
+    let column = List.map (fun i -> List.nth vars (index i j)) [0;1;2;3;4;5;6;7;8] in
+    constrs := (Constraint.AllDifferent column)::!constrs
   done;
 
   (* Blocks *)
   for i = 0 to 9-1 do
-    for j = 0 to 9-1 do
-      for k = 0 to j-1 do
-        constrs := (Constraint.create (Comparator ((<>),
-                                                   (Var (List.nth vars (blockIndex i j))),
-                                                   (Var (List.nth vars (blockIndex i k))))))::!constrs
-      done
-    done;
+    let block = List.map (fun k -> List.nth vars (blockIndex i k)) [0;1;2;3;4;5;6;7;8] in
+    constrs := (Constraint.AllDifferent block)::!constrs
   done;
 
   (* Lets set some values ! *)

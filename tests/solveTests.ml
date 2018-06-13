@@ -3,16 +3,16 @@ open OContrainte
 open OContrainte.Expression
 
 let testSolve1 test_ctxt =
-  let cstr = Constraint.create (Comparator ((<),
+  let cstr = Constraint.BoolConstr (Comparator ((<),
                                             (IntConst 1),
                                             (IntConst 2))) in
   assert_equal (Solver.solve [] [cstr]) true
 
 let testSolve2 test_ctxt =
-  let cstr1 = Constraint.create (Comparator ((<),
+  let cstr1 = Constraint.BoolConstr (Comparator ((<),
                                              (IntConst 1),
                                              (IntConst 2))) in
-  let cstr2 = Constraint.create (Comparator ((>),
+  let cstr2 = Constraint.BoolConstr (Comparator ((>),
                                              (IntConst 1),
                                              (IntConst 2))) in
   assert_equal (Solver.solve [] [cstr1; cstr2]) false
@@ -20,10 +20,10 @@ let testSolve2 test_ctxt =
 let testSolve3 test_ctxt =
   let var1 = Variable.create (Domain.fromList [1;2;3;4;5]) in
   let var2 = Variable.create (Domain.fromList [4;5;7]) in
-  let cstr1 = Constraint.create (Comparator ((>),
+  let cstr1 = Constraint.BoolConstr (Comparator ((>),
                                              (Var var2),
                                              (IntConst 6))) in
-  let cstr2 = Constraint.create (Comparator ((=),
+  let cstr2 = Constraint.BoolConstr (Comparator ((=),
                                              (IntBinOp ((+),
                                                         (Var var1),
                                                         (Var var2))),
