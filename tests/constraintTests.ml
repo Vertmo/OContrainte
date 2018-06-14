@@ -43,9 +43,23 @@ let testAllDifferent test_ctxt =
   Variable.assign var3 3;
   assert_equal (Constraint.isConsistent cstr) false
 
+let testPropagate1 test_ctxt =
+  let var1 = Variable.create (Domain.range 1 6) and
+  var2 = Variable.create (Domain.range 1 6) and
+  var3 = Variable.create (Domain.range 1 4) in
+  let cstr = Constraint.AllDifferent [var1; var2; var3] in
+  Variable.assign var1 3;
+  assert_equal (Constraint.propagate cstr) true;
+  assert_equal (Constraint.propagate cstr) false;
+  assert_equal (Domain.card (Variable.domain var2)) 4;
+  Variable.assign var2 1;
+  assert_equal (Constraint.propagate cstr) true;
+  assert_equal (Variable.value var3) (Some 2)
+
 let suite = [
   "boolConstr1">::testBoolConstr1;
   "boolConstr2">::testBoolConstr2;
   "boolConstr3">::testBoolConstr3;
   "allDifferent">::testAllDifferent;
+  "propagate1">::testPropagate1;
 ]

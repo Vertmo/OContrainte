@@ -2,22 +2,22 @@ open OUnit2
 open OContrainte
 open OContrainte.Expression
 
-let testSolve1 test_ctxt =
+let testBacktrack1 test_ctxt =
   let cstr = Constraint.BoolConstr (Comparator ((<),
                                             (IntConst 1),
                                             (IntConst 2))) in
-  assert_equal (Solver.solve [] [cstr]) true
+  assert_equal (Solver.backtrack [] [cstr]) true
 
-let testSolve2 test_ctxt =
+let testBacktrack2 test_ctxt =
   let cstr1 = Constraint.BoolConstr (Comparator ((<),
                                              (IntConst 1),
                                              (IntConst 2))) in
   let cstr2 = Constraint.BoolConstr (Comparator ((>),
                                              (IntConst 1),
                                              (IntConst 2))) in
-  assert_equal (Solver.solve [] [cstr1; cstr2]) false
+  assert_equal (Solver.backtrack [] [cstr1; cstr2]) false
 
-let testSolve3 test_ctxt =
+let testBacktrack3 test_ctxt =
   let var1 = Variable.create (Domain.fromList [1;2;3;4;5]) in
   let var2 = Variable.create (Domain.fromList [4;5;7]) in
   let cstr1 = Constraint.BoolConstr (Comparator ((>),
@@ -28,16 +28,27 @@ let testSolve3 test_ctxt =
                                                         (Var var1),
                                                         (Var var2))),
                                              (IntConst 10))) in
-  assert_equal (Solver.solve [var1; var2] [cstr1; cstr2]) true;
+  assert_equal (Solver.backtrack [var1; var2] [cstr1; cstr2]) true;
   assert_equal (Variable.value var1) (Some 3);
 
   Variable.unassign var2;
   Variable.assign var1 5;
-  assert_equal (Solver.solve [var1; var2] [cstr1; cstr2]) false
+  assert_equal (Solver.backtrack [var1; var2] [cstr1; cstr2]) false
 
+let testPropagate1 test_ctxt =
+  let var1 = Variable.create (Domain.range 1 2) and
+  var2 = Variable.create (Domain.range 1 3) and
+  var3 = Variable.create (Domain.range 1 4) in
+  let cstr1 = Constraint.AllDifferent [var1; var2] and
+  cstr2 = Constraint.AllDifferent [var2; var3] in
+  assert_equal (Solver.propagate [var1; var2; var3] [cstr1; cstr2]) false;
+  assert_equal (Variable.value var1) (Some 1);
+  assert_equal (Variable.value var2) (Some 2);
+  assert_equal (Domain.card (Variable.domain var3)) 2
 
 let suite = [
-  "solve1">::testSolve1;
-  "solve2">::testSolve2;
-  "solve3">::testSolve3;
+  "backtrack1">::testBacktrack1;
+  "backtrack2">::testBacktrack2;
+  "backtrack3">::testBacktrack3;
+  "propagate1">::testPropagate1;
 ]
