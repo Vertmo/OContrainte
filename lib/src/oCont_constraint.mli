@@ -11,3 +11,9 @@ val isConsistent : constr -> bool
 
 (** Check if a list of constraints are all consistent *)
 val areConsistent : constr list -> bool
+
+(** Propagate a constraint; returns true if it reduced the domain of one of the variables *)
+val propagate : constr -> bool
+
+(** Propagates every constraint; returns true if at least one propagation reduced the domain of one of the variables *)
+val propagateAll : constr list -> bool
