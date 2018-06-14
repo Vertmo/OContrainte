@@ -1,5 +1,7 @@
+open Avr
 open OContrainte
-open OContrainte.Expression
+
+let g = PIN11 and r = PIN10
 
 (** Get index for coordinates (x,y) in the grid *)
 let index x y = y * 9 + x
@@ -13,6 +15,7 @@ let blockIndex b i =
 let assignFrame vars x y v = (Variable.assign (List.nth vars (index x y)) v)
 
 let () =
+  let _ = digital_read PIN7 in
   let d = Domain.range 1 (9+1) in
   let vars = List.map (fun _ -> Variable.create d) (Domain.asList (Domain.range 0 (9*9))) in
   let constrs = ref [] in
@@ -47,16 +50,6 @@ let () =
   assignFrame vars 3 7 4; assignFrame vars 4 7 1; assignFrame vars 5 7 9; assignFrame vars 8 7 5;
   assignFrame vars 4 8 8; assignFrame vars 7 8 7; assignFrame vars 8 8 9;
 
-  if not (Solver.solve vars !constrs)
-  then print_endline "We didn't find a solution"
-  else begin
-    print_endline "We found a solution :";
-    for i = 0 to 9-1 do
-      for j = 0 to 9-1 do
-        print_string " ";
-        Variable.print_var (List.nth vars (9*i+j));
-        print_string " ";
-      done;
-      print_endline ""
-    done;
-  end
+  if Solver.solve vars !constrs
+  then digital_write g HIGH
+  else digital_write r HIGH
