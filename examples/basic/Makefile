@@ -5,7 +5,7 @@ TARGETS = basic.byte basic.c basic.elf basic.avr basic.hex
 all: $(TARGETS)
 
 $(TARGETS): basic.ml
-	$(BIN)/omicrob -v basic.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src
+	$(BIN)/omicrob -v basic.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -stack-size 128
 
 flash: basic.hex
 	$(BIN)/omicrob -flash -sudo $<

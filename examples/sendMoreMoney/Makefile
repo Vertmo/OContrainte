@@ -5,7 +5,7 @@ TARGETS = sendMoreMoney.byte sendMoreMoney.c sendMoreMoney.elf sendMoreMoney.avr
 all: $(TARGETS)
 
 $(TARGETS): sendMoreMoney.ml
-	$(BIN)/omicrob -v sendMoreMoney.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -stack-size=256 -heap-size=512
+	$(BIN)/omicrob -v sendMoreMoney.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -stack-size=171 -heap-size=450
 
 flash: sendMoreMoney.hex
 	$(BIN)/omicrob -flash -sudo $<

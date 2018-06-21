@@ -2,11 +2,13 @@ open Avr
 open OContrainte
 open OContrainte.Expression
 
-let g = PIN11 and r = PIN10
 let n = 8
 
 let () =
-  let _ = digital_read PIN7 in
+  let g = PIN11 and r = PIN10 and b = PIN9 in
+  pin_mode b OUTPUT; digital_write b LOW;
+  pin_mode g OUTPUT; digital_write g HIGH;
+  pin_mode r OUTPUT; digital_write r HIGH;
   let d = Domain.range 0 n in
   let vars = List.map (fun _ -> Variable.create d) (Domain.asList d) in
   let constrs = ref [] in
@@ -33,5 +35,5 @@ let () =
   done;
   (*Variable.assign (List.nth vars 0) 3;*)
   if Solver.solve vars !constrs
-  then digital_write g HIGH
-  else digital_write r HIGH
+  then (digital_write g LOW; digital_write b HIGH)
+  else (digital_write r LOW; digital_write b HIGH)

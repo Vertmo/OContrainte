@@ -5,7 +5,7 @@ TARGETS = nqueens.byte nqueens.c nqueens.elf nqueens.avr nqueens.hex
 all: $(TARGETS)
 
 $(TARGETS): nqueens.ml
-	$(BIN)/omicrob -v nqueens.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -stack-size 256 -heap-size 2048
+	$(BIN)/omicrob -v nqueens.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -stack-size 140 -heap-size 1600
 
 flash: nqueens.hex
 	$(BIN)/omicrob -flash -sudo $<
