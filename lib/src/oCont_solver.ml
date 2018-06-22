@@ -5,6 +5,12 @@ open OCont_domain
 let propagate vars constrs =
   List.iter (fun v ->
       if (card (domain v)) = 1 then assign v (List.hd (asList (domain v)))) vars;
+
+  List.iter (fun v ->
+      match value v with
+      | None -> ()
+      | Some n -> (List.iter (fun value -> (let _ = (reduceDomain v value) in ())) (List.filter (fun value -> value <> n) (asList (domain v))))) vars;
+
   let changed = ref true in
   while !changed do
     changed := OCont_constraint.propagateAll constrs

@@ -7,14 +7,15 @@ let testAllVars1 test_ctxt = assert_equal (allVarsI (IntConst 2)) []
 
 let testAllVars2 test_ctxt = assert_equal (allVarsI (Var (Variable.create (Domain.empty)))) [Variable.create Domain.empty]
 
-let testAllVars3 test_ctxt = let expr = IntBinOp ((fun x -> fun y -> x * y),
-                                                  (Var (Variable.create (Domain.range 1 5))),
-                                                  (IntBinOp ((+), (Var (Variable.create (Domain.range 1 4))), (Var (Variable.create (Domain.range 1 4)))))) in
-  assert_equal (List.length (allVarsI expr)) 3
+let testAllVars3 test_ctxt = assert_equal (allVarsB (BoolConst true)) []
 
-let testAllVars4 test_ctxt = assert_equal (allVarsB (BoolConst true)) []
+let testAllVars4 test_ctxt = let expr = Comparator ((>), (Var (Variable.create (Domain.range 1 3))), (Var (Variable.create (Domain.range 2 4)))) in
+  assert_equal (List.length (allVarsB expr)) 2
 
-let testAllVars5 test_ctxt = let expr = Comparator ((>), (Var (Variable.create (Domain.range 1 3))), (Var (Variable.create (Domain.range 2 4)))) in
+let testAllVars5 test_ctxt =
+  let var1 = Variable.create (Domain.range 1 3) and
+  var2 = Variable.create (Domain.range 1 4) in
+  let expr = (Comparator ((<), ((IntBinOp ((+), (Var var1), (Var var2)))), (Var var2))) in
   assert_equal (List.length (allVarsB expr)) 2
 
 (* eval tests *)
