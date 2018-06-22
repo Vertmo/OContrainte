@@ -11,18 +11,20 @@ type boolExpr = BoolConst of bool
               | BoolUnOp of (bool -> bool) * boolExpr
               | BoolBinOp of (bool -> bool -> bool) * boolExpr * boolExpr
 
+let removeDuplicates l = List.fold_left (fun xs x -> if List.mem x xs then xs else x::xs) [] l
+
 let rec allVarsI e = match e with
   | IntConst _ -> []
   | Var v -> [v]
   | IntUnOp (_, e1) -> allVarsI e1
-  | IntBinOp (_, e1, e2) -> (allVarsI e1)@(allVarsI e2)
-  | IntMultiOp (_, es) -> List.flatten (List.map allVarsI es)
+  | IntBinOp (_, e1, e2) -> removeDuplicates ((allVarsI e1)@(allVarsI e2))
+  | IntMultiOp (_, es) -> removeDuplicates (List.flatten (List.map allVarsI es))
 
 let rec allVarsB e = match e with
   | BoolConst _ -> []
-  | Comparator (_, e1, e2) -> (allVarsI e1)@(allVarsI e2)
+  | Comparator (_, e1, e2) -> removeDuplicates ((allVarsI e1)@(allVarsI e2))
   | BoolUnOp (_, e1) -> allVarsB e1
-  | BoolBinOp (_, e1, e2) -> (allVarsB e1)@(allVarsB e2)
+  | BoolBinOp (_, e1, e2) -> removeDuplicates ((allVarsB e1)@(allVarsB e2))
 
 let rec allAssignedI e = match e with
   | IntConst _ -> true

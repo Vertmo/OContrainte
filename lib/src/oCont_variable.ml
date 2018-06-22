@@ -27,12 +27,9 @@ let print_var v = match v.value with
   | None -> print_string "?"
 
 let reduceDomain v n =
-  if not (isAssigned v)
-    then (
-      let dom2 = remove v.domain n in
-      if card dom2 < card v.domain
-      then (v.domain <- dom2;
-            if (card v.domain = 1) then assign v (List.hd (asList v.domain));
-            true)
-      else false)
-    else false
+  let dom2 = remove v.domain n in
+  if card dom2 < card v.domain
+  then (v.domain <- dom2;
+        if (card v.domain = 1) then assign v (List.hd (asList v.domain));
+        true)
+  else false
