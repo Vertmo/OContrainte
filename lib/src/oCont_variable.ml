@@ -12,7 +12,7 @@ let domain v = v.domain
 let assign v n =
   if OCont_domain.contains v.domain n
   then v.value <- Some n
-  else invalid_arg "value_not_in_domain"
+  else invalid_arg ""
 
 let unassign v = v.value <- None
 

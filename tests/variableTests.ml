@@ -20,7 +20,7 @@ let testUnassign test_ctxt =
 
 let testBadValue test_ctxt =
   let v = Variable.create (Domain.range 3 7) in
-  assert_raises (Invalid_argument "value_not_in_domain") (fun () -> Variable.assign v 8)
+  assert_raises (Invalid_argument "") (fun () -> Variable.assign v 8)
 
 let suite = [
   "assign">::testAssign;

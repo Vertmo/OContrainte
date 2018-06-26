@@ -3,7 +3,7 @@ type dom = Range of int * int | Arr of int array
 let empty = Arr [||]
 
 let rec range start stop =
-  if start > stop then invalid_arg "range";
+  if start > stop then invalid_arg "";
   Range (start, stop)
 
 let fromList l = Arr (Array.of_list (List.sort_uniq (-) l))
