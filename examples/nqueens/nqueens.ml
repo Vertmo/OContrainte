@@ -2,13 +2,13 @@ open Avr
 open OContrainte
 open OContrainte.Expression
 
-let n = 8
+let n = 5
 
 let () =
-  let g = PIN11 and r = PIN10 and b = PIN9 in
-  pin_mode b OUTPUT; digital_write b LOW;
-  pin_mode g OUTPUT; digital_write g HIGH;
-  pin_mode r OUTPUT; digital_write r HIGH;
+  let g = PIN22 and r = PIN24 and b = PIN26 in
+  pin_mode b OUTPUT; digital_write b HIGH;
+  pin_mode g OUTPUT; digital_write g LOW;
+  pin_mode r OUTPUT; digital_write r LOW;
   let d = Domain.range 0 n in
   let vars = List.map (fun _ -> Variable.create d) (Domain.asList d) in
   let constrs = ref [] in
@@ -33,7 +33,7 @@ let () =
                                                         (IntConst (i - j)))))))))::!constrs
     done
   done;
-  (*Variable.assign (List.nth vars 0) 3;*)
+  (* Variable.assign (List.nth vars 0) 3; *)
   if Solver.solve vars !constrs
-  then (digital_write g LOW; digital_write b HIGH)
-  else (digital_write r LOW; digital_write b HIGH)
+  then (digital_write g HIGH; digital_write b LOW)
+  else (digital_write r HIGH; digital_write b LOW)

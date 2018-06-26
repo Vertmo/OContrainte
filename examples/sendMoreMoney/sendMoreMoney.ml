@@ -6,10 +6,10 @@ open OContrainte.Expression
 
 
 let () =
-  let green = PIN11 and red = PIN10 and blue = PIN9 in
-  pin_mode green OUTPUT; digital_write green HIGH;
-  pin_mode red OUTPUT; digital_write red HIGH;
-  pin_mode blue OUTPUT; digital_write blue LOW;
+  let green = PIN22 and red = PIN24 and blue = PIN26 in
+  pin_mode blue OUTPUT; digital_write blue HIGH;
+  pin_mode green OUTPUT; digital_write green LOW;
+  pin_mode red OUTPUT; digital_write red LOW;
 
   let dom = Domain.range 0 10 in
   let s = Variable.create dom and e = Variable.create dom and n = Variable.create dom
@@ -37,6 +37,6 @@ let () =
                                                         (IntMultiOp (sumBaseTen, more)))),
                                              (IntMultiOp (sumBaseTen, money)))))::!constrs;
 
-  if Solver.solve vars !constrs
+  if Solver.backtrack vars !constrs
   then digital_write green LOW
   else digital_write red LOW
