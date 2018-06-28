@@ -44,3 +44,9 @@ let rec max d = match d with
 let contains d n = match d with
   | Range (start, stop) -> n >= start && n < stop
   | Arr a -> Array.exists (fun e -> e = n) a
+
+let exists d p = match d with
+  | Range (start, stop) -> let found = ref false and i = ref start in
+    while !i < stop && not !found do found := p !i; i := !i + 1 done;
+    !found
+  | Arr a -> Array.exists p a
