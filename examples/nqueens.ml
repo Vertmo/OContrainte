@@ -15,17 +15,17 @@ let () =
   for i = 1 to n-1 do
     for j = 0 to i-1 do
       constrs := (Constraint.BoolConstr
-                    (BoolBinOp ((&&),
+                    (BinOp ((&&),
                                 (Comparator ((<>),
                                              (Var (List.nth vars i)),
-                                             (IntBinOp ((+),
+                                             (BinOp ((+),
                                                         (Var (List.nth vars j)),
-                                                        (IntConst (i - j)))))),
+                                                        (Const (i - j)))))),
                                 (Comparator ((<>),
                                              (Var (List.nth vars i)),
-                                             (IntBinOp ((-),
+                                             (BinOp ((-),
                                                         (Var (List.nth vars j)),
-                                                        (IntConst (i - j)))))))))::!constrs
+                                                        (Const (i - j)))))))))::!constrs
     done
   done;
   (*Variable.assign (List.nth vars 0) 3;*)

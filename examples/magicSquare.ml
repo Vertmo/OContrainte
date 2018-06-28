@@ -16,33 +16,33 @@ let () =
   for i = 0 to n-1 do
     let row = List.map (fun j -> (List.nth vars (i*n+j))) (Domain.asList (Domain.range 0 n)) in
     constrs := (Constraint.BoolConstr (Comparator ((=),
-                                               (IntMultiOp ((List.fold_left (+) 0),
+                                               (MultiOp ((List.fold_left (+) 0),
                                                             (List.map (fun v -> Var v) row))),
-                                               (IntConst magicTotal))))::!constrs
+                                               (Const magicTotal))))::!constrs
     done;
 
   (* Columns equal to magicTotal *)
   for i = 0 to n-1 do
     let column = List.map (fun j -> (List.nth vars (j*n+i))) (Domain.asList (Domain.range 0 n)) in
     constrs := (Constraint.BoolConstr (Comparator ((=),
-                                               (IntMultiOp ((List.fold_left (+) 0),
+                                               (MultiOp ((List.fold_left (+) 0),
                                                             (List.map (fun v -> Var v) column))),
-                                               (IntConst magicTotal))))::!constrs
+                                               (Const magicTotal))))::!constrs
   done;
 
   (* Diagonals equal to magicTotal *)
   let diag1 = List.map (fun i -> (List.nth vars (i*n+i))) (Domain.asList (Domain.range 0 n))
   and diag2 = List.map (fun i -> (List.nth vars (i*n + (n-1) - i))) (Domain.asList (Domain.range 0 n)) in
 
-  constrs := (Constraint.BoolConstr (BoolBinOp ((&&),
+  constrs := (Constraint.BoolConstr (BinOp ((&&),
                                             (Comparator ((=),
-                                                         (IntMultiOp ((List.fold_left (+) 0),
+                                                         (MultiOp ((List.fold_left (+) 0),
                                                                       (List.map (fun v -> Var v) diag1))),
-                                                         (IntConst magicTotal))),
+                                                         (Const magicTotal))),
                                             (Comparator ((=),
-                                                         (IntMultiOp ((List.fold_left (+) 0),
+                                                         (MultiOp ((List.fold_left (+) 0),
                                                                       (List.map (fun v -> Var v) diag2))),
-                                                         (IntConst magicTotal))))))::!constrs;
+                                                         (Const magicTotal))))))::!constrs;
 
   if not (Solver.solve vars !constrs)
   then print_endline "We didn't find a solution..."

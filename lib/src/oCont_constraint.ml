@@ -1,12 +1,12 @@
 open OCont_variable
 open OCont_expression
 
-type constr = BoolConstr of boolExpr | AllDifferent of var list
+type constr = BoolConstr of bool expr | AllDifferent of var list
 
 let create e = e
 
 let isConsistent c = match c with
-  | BoolConstr b -> if allAssignedB b then evalB b else true
+  | BoolConstr b -> if allAssigned b then eval b else true
   | AllDifferent vars ->
     not (List.exists (fun v1 -> List.exists (fun v2 -> (not (v1 == v2)) && (not (value v1 = None)) && (v1 = v2)) vars) vars)
 
@@ -35,7 +35,7 @@ let propagateArc c v1 v2 = let changed = ref false in
   !changed
 
 let propagate c = match c with
-  | BoolConstr b -> (match List.filter (fun v -> not (isAssigned v)) (allVarsB b) with
+  | BoolConstr b -> (match List.filter (fun v -> not (isAssigned v)) (allVars b) with
     | v::[] -> propagateNode c v
     | v1::v2::[] -> propagateArc c v1 v2
     | _ -> false)
