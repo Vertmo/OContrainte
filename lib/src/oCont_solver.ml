@@ -4,7 +4,9 @@ open OCont_domain
 
 let propagate vars constrs =
   List.iter (fun v ->
-      if (card (domain v)) = 1 then assign v (List.hd (asList (domain v)))) vars;
+      if (card (domain v)) = 1 then match (min (domain v)) with
+        | Some n -> assign v n
+        | None -> ()) vars;(* assign v (min (domain v))) vars; *)
 
   List.iter (fun v ->
       match value v with
@@ -19,8 +21,8 @@ let propagate vars constrs =
 
 let rec backtrack vars constrs = match vars with
   | t::q when (isAssigned t) -> backtrack q constrs
-  | t::q -> let reus = List.exists (fun v -> assign t v;
-                                     (areConsistent constrs) && (backtrack vars constrs)) (asList (domain t)) in
+  | t::q -> let reus = exists (domain t) (fun v -> assign t v;
+                                     (areConsistent constrs) && (backtrack q constrs)) in
     if reus then true else (unassign t; false)
   | [] -> areConsistent constrs
 

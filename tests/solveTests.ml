@@ -4,17 +4,17 @@ open OContrainte.Expression
 
 let testBacktrack1 test_ctxt =
   let cstr = Constraint.BoolConstr (Comparator ((<),
-                                            (IntConst 1),
-                                            (IntConst 2))) in
+                                            (Const 1),
+                                            (Const 2))) in
   assert_equal (Solver.backtrack [] [cstr]) true
 
 let testBacktrack2 test_ctxt =
   let cstr1 = Constraint.BoolConstr (Comparator ((<),
-                                             (IntConst 1),
-                                             (IntConst 2))) in
+                                             (Const 1),
+                                             (Const 2))) in
   let cstr2 = Constraint.BoolConstr (Comparator ((>),
-                                             (IntConst 1),
-                                             (IntConst 2))) in
+                                             (Const 1),
+                                             (Const 2))) in
   assert_equal (Solver.backtrack [] [cstr1; cstr2]) false
 
 let testBacktrack3 test_ctxt =
@@ -22,12 +22,12 @@ let testBacktrack3 test_ctxt =
   let var2 = Variable.create (Domain.fromList [4;5;7]) in
   let cstr1 = Constraint.BoolConstr (Comparator ((>),
                                              (Var var2),
-                                             (IntConst 6))) in
+                                             (Const 6))) in
   let cstr2 = Constraint.BoolConstr (Comparator ((=),
-                                             (IntBinOp ((+),
+                                             (BinOp ((+),
                                                         (Var var1),
                                                         (Var var2))),
-                                             (IntConst 10))) in
+                                             (Const 10))) in
   assert_equal (Solver.backtrack [var1; var2] [cstr1; cstr2]) true;
   assert_equal (Variable.value var1) (Some 3);
 

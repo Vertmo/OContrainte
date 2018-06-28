@@ -58,7 +58,7 @@ let testPropagate1 test_ctxt =
 
 let testPropagate2 test_ctxt =
   let var1 = Variable.create (Domain.range 1 6) in
-  let cstr = Constraint.BoolConstr (Comparator ((>), (Var var1), (IntConst 3))) in
+  let cstr = Constraint.BoolConstr (Comparator ((>), (Var var1), (Const 3))) in
   assert_equal (Constraint.propagate cstr) true;
   assert_equal (Constraint.propagate cstr) false;
   assert_equal (Variable.value var1) None;

@@ -20,8 +20,8 @@ let () =
   let constrs = ref [] in
 
   (* Most significative numbers (m and s) are not 0 *)
-  constrs := (Constraint.BoolConstr (Comparator ((<>), (Var m), (IntConst 0))))::!constrs;
-  constrs := (Constraint.BoolConstr (Comparator ((<>), (Var s), (IntConst 0))))::!constrs;
+  constrs := (Constraint.BoolConstr (Comparator ((<>), (Var m), (Const 0))))::!constrs;
+  constrs := (Constraint.BoolConstr (Comparator ((<>), (Var s), (Const 0))))::!constrs;
 
   (* Each letter has a different value *)
   constrs := (Constraint.AllDifferent vars)::!constrs;
@@ -32,10 +32,10 @@ let () =
   and money = List.map (fun v -> Var v) [m;o;n;e;y] in
   let sumBaseTen = (List.fold_left (fun a -> fun e -> 10*a+e) 0) in
   constrs := (Constraint.BoolConstr (Comparator ((=),
-                                             (IntBinOp ((+),
-                                                        (IntMultiOp (sumBaseTen, send)),
-                                                        (IntMultiOp (sumBaseTen, more)))),
-                                             (IntMultiOp (sumBaseTen, money)))))::!constrs;
+                                             (BinOp ((+),
+                                                        (MultiOp (sumBaseTen, send)),
+                                                        (MultiOp (sumBaseTen, more)))),
+                                             (MultiOp (sumBaseTen, money)))))::!constrs;
 
   if Solver.backtrack vars !constrs
   then digital_write green LOW
