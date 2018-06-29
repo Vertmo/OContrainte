@@ -4,7 +4,7 @@ open OCont_expression
 
 (** Constraint type : either a boolean expression or a predefined constraint *)
 type constr = BoolConstr of bool expr (** is consistent if expression evaluates to true or at least one variable is unassigned *)
-            | AllDifferent of OCont_variable.var list (** is consistent if all variables are assigned to different values (or unassigned) *)
+            | AllDifferent of int expr list (** is consistent if all variables are assigned to different values (or unassigned) *)
 
 (** A constraint is consistent if it's boolean expression evaluates to true or if the predefined condition are met *)
 val isConsistent : constr -> bool

@@ -1,5 +1,6 @@
 open Avr
 open OContrainte
+open OContrainte.Expression
 
 let g = PIN11 and r = PIN10
 
@@ -23,19 +24,19 @@ let () =
   (* Rows *)
   for i = 0 to 9-1 do
     let row = List.map (fun j -> List.nth vars (index i j)) [0;1;2;3;4;5;6;7;8] in
-    constrs := (Constraint.AllDifferent row)::!constrs
+    constrs := (Constraint.AllDifferent (List.map (fun v -> Var v) row))::!constrs
   done;
 
   (* Columns *)
   for j = 0 to 9-1 do
     let column = List.map (fun i -> List.nth vars (index i j)) [0;1;2;3;4;5;6;7;8] in
-    constrs := (Constraint.AllDifferent column)::!constrs
+    constrs := (Constraint.AllDifferent  (List.map (fun v -> Var v) column))::!constrs
   done;
 
   (* Blocks *)
   for i = 0 to 9-1 do
     let block = List.map (fun k -> List.nth vars (blockIndex i k)) [0;1;2;3;4;5;6;7;8] in
-    constrs := (Constraint.AllDifferent block)::!constrs
+    constrs := (Constraint.AllDifferent (List.map (fun v -> Var v) block))::!constrs
   done;
 
   (* Lets set some values ! *)

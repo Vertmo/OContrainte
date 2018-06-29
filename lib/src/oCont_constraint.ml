@@ -1,14 +1,16 @@
 open OCont_variable
 open OCont_expression
 
-type constr = BoolConstr of bool expr | AllDifferent of var list
+type constr = BoolConstr of bool expr | AllDifferent of int expr list
 
 let create e = e
 
 let isConsistent c = match c with
   | BoolConstr b -> if allAssigned b then eval b else true
-  | AllDifferent vars ->
-    not (List.exists (fun v1 -> List.exists (fun v2 -> (not (v1 == v2)) && (not (value v1 = None)) && (v1 = v2)) vars) vars)
+  | AllDifferent exprs ->
+    not (List.exists (fun e1 -> List.exists (fun e2 -> (not (e1 == e2)) &&
+                                                       (allAssigned e1) && (allAssigned e2) &&
+                                                       (eval e1 = eval e2)) exprs) exprs)
 
 let areConsistent constrs = List.fold_left (fun a c -> a && isConsistent c) true constrs
 
@@ -39,10 +41,12 @@ let propagate c = match c with
     | v::[] -> propagateNode c v
     | v1::v2::[] -> propagateArc c v1 v2
     | _ -> false)
-  | AllDifferent vars -> let changed = ref false in
-    List.iter (fun v1 -> match value v1 with
-        | Some n -> List.iter (fun v2 -> if v1 <> v2 then changed := (reduceDomain v2 n) || !changed) vars
-        | None -> ()) vars;
+  | AllDifferent exprs -> let changed = ref false in
+    List.iter (fun e1 ->
+        if allAssigned e1 then let n = eval e1 in
+          List.iter (fun e2 -> match e2 with
+              | Var v2 when not (isAssigned v2) -> changed := (reduceDomain v2 n) || !changed
+              | _ -> () (* TODO *)) exprs) exprs;
     !changed
 
 let propagateAll constrs = List.fold_left (fun a c -> propagate c || a) false constrs

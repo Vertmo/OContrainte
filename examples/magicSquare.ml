@@ -10,7 +10,7 @@ let () =
   let constrs = ref [] in
 
   (* All variables are different *)
-  constrs := (Constraint.AllDifferent vars)::!constrs;
+  constrs := (Constraint.AllDifferent (List.map (fun v -> Var v) vars))::!constrs;
 
   (* Rows equal to magicTotal *)
   for i = 0 to n-1 do

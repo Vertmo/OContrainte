@@ -14,7 +14,7 @@ let () =
   let constrs = ref [] in
 
   (* Queens are on different rows *)
-  constrs := (Constraint.AllDifferent vars)::!constrs;
+  constrs := (Constraint.AllDifferent (List.map (fun v -> Var v) vars))::!constrs;
 
   (* Diagonals *)
   for i = 1 to n-1 do
