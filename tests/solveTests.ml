@@ -39,8 +39,8 @@ let testPropagate1 test_ctxt =
   let var1 = Variable.create (Domain.range 1 2) and
   var2 = Variable.create (Domain.range 1 3) and
   var3 = Variable.create (Domain.range 1 4) in
-  let cstr1 = Constraint.AllDifferent [var1; var2] and
-  cstr2 = Constraint.AllDifferent [var2; var3] in
+  let cstr1 = Constraint.AllDifferent [Var var1; Var var2] and
+  cstr2 = Constraint.AllDifferent [Var var2; Var var3] in
   assert_equal (Solver.propagate [var1; var2; var3] [cstr1; cstr2]) false;
   assert_equal (Variable.value var1) (Some 1);
   assert_equal (Variable.value var2) (Some 2);

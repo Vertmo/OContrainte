@@ -17,7 +17,7 @@ let () =
   constrs := (Constraint.BoolConstr (Comparator ((<>), (Var s), (Const 0))))::!constrs;
 
   (* Each letter has a different value *)
-  constrs := (Constraint.AllDifferent vars)::!constrs;
+  constrs := (Constraint.AllDifferent (List.map (fun v -> Var v) vars))::!constrs;
 
   (* Sum *)
   let send = List.map (fun v -> Var v) [s;e;n;d]
