@@ -45,7 +45,12 @@ let contains d n = match d with
   | Range (start, stop) -> n >= start && n < stop
   | Arr a -> Array.exists (fun e -> e = n) a
 
-let exists d p = match d with
+let iter f d = match d with
+  | Range (start, stop) -> let i = ref start in
+    while !i < stop do f !i; i := !i + 1 done
+  | Arr a -> Array.iter f a
+
+let exists p d = match d with
   | Range (start, stop) -> let found = ref false and i = ref start in
     while !i < stop && not !found do found := p !i; i := !i + 1 done;
     !found

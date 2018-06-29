@@ -36,5 +36,8 @@ val max : dom -> int option
 (** Checks if the domains contains a value *)
 val contains : dom -> int -> bool
 
+(** Iter a function on the domain *)
+val iter : (int -> unit) -> dom -> unit
+
 (** Checks if the domains contains a value that satisfy a predicate *)
-val exists : dom -> (int -> bool) -> bool
+val exists : (int -> bool) -> dom -> bool

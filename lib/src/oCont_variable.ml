@@ -30,6 +30,8 @@ let reduceDomain v n =
   let dom2 = remove v.domain n in
   if card dom2 < card v.domain
   then (v.domain <- dom2;
-        if (card v.domain = 1) then assign v (List.hd (asList v.domain));
+        (if (card v.domain = 1) then match min v.domain with
+          | Some n -> assign v n
+          | None -> ());
         true)
   else false
