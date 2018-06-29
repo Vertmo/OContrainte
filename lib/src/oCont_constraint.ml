@@ -13,20 +13,20 @@ let isConsistent c = match c with
 let areConsistent constrs = List.fold_left (fun a c -> a && isConsistent c) true constrs
 
 let propagateNode c v = let changed = ref false in
-  List.iter (fun n -> assign v n;
+  OCont_domain.iter (fun n -> assign v n;
               if (not (isConsistent c)) then changed := reduceDomain v n || !changed;
-              unassign v) (OCont_domain.asList (domain v));
+              unassign v) (domain v);
   !changed
 
 
 let propagateArcAux c v1 v2 = let changed = ref false in
-  List.iter (fun n1 ->
+  OCont_domain.iter (fun n1 ->
       assign v1 n1;
-      if not (List.exists
-                 (fun n2 -> assign v2 n2; let cons = isConsistent c in unassign v2; cons) (OCont_domain.asList (domain v2)))
+      if not (OCont_domain.exists
+                 (fun n2 -> assign v2 n2; let cons = isConsistent c in unassign v2; cons) (domain v2))
       then changed := reduceDomain v1 n1 || !changed;
       unassign v1)
-    (OCont_domain.asList (domain v1));
+    (domain v1);
   !changed
 
 let propagateArc c v1 v2 = let changed = ref false in

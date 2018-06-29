@@ -21,8 +21,8 @@ let propagate vars constrs =
 
 let rec backtrack vars constrs = match vars with
   | t::q when (isAssigned t) -> backtrack q constrs
-  | t::q -> let reus = exists (domain t) (fun v -> assign t v;
-                                     (areConsistent constrs) && (backtrack q constrs)) in
+  | t::q -> let reus = exists (fun v -> assign t v;
+                                (areConsistent constrs) && (backtrack q constrs)) (domain t) in
     if reus then true else (unassign t; false)
   | [] -> areConsistent constrs
 
