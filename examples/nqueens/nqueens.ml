@@ -2,7 +2,7 @@ open Avr
 open OContrainte
 open OContrainte.Expression
 
-let n = 5
+let n = 6
 
 let () =
   let g = PIN22 and r = PIN24 and b = PIN26 in
@@ -34,6 +34,6 @@ let () =
     done
   done;
   (* Variable.assign (List.nth vars 0) 3; *)
-  if Solver.solve vars !constrs
+  if Solver.backtrack vars !constrs
   then (digital_write g HIGH; digital_write b LOW)
   else (digital_write r HIGH; digital_write b LOW)
