@@ -8,11 +8,12 @@ let create e = e
 let isConsistent c = match c with
   | BoolConstr b -> if allAssigned b then eval b else true
   | AllDifferent exprs ->
-    not (List.exists (fun e1 -> List.exists (fun e2 -> (not (e1 == e2)) &&
-                                                       (allAssigned e1) && (allAssigned e2) &&
-                                                       (eval e1 = eval e2)) exprs) exprs)
+    List.for_all (fun e1 ->
+        List.for_all (fun e2 -> (e1 == e2) ||
+                                (not (allAssigned e1)) || (not (allAssigned e2)) ||
+                                (eval e1 <> eval e2)) exprs) exprs
 
-let areConsistent constrs = List.fold_left (fun a c -> a && isConsistent c) true constrs
+let areConsistent constrs = List.for_all isConsistent constrs
 
 let propagateNode c v = let changed = ref false in
   OCont_domain.iter (fun n -> assign v n;
@@ -25,7 +26,7 @@ let propagateArcAux c v1 v2 = let changed = ref false in
   OCont_domain.iter (fun n1 ->
       assign v1 n1;
       if not (OCont_domain.exists
-                 (fun n2 -> assign v2 n2; let cons = isConsistent c in unassign v2; cons) (domain v2))
+                (fun n2 -> assign v2 n2; let cons = isConsistent c in unassign v2; cons) (domain v2))
       then changed := reduceDomain v1 n1 || !changed;
       unassign v1)
     (domain v1);
