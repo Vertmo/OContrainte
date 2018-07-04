@@ -55,3 +55,5 @@ let exists p d = match d with
     while !i < stop && not !found do found := p !i; i := !i + 1 done;
     !found
   | Arr a -> Array.exists p a
+
+let filter p d = fromList (List.filter p (asList d))

@@ -1,18 +1,19 @@
 open OUnit2
 open OContrainte
+open OContrainte.Operators
 open OContrainte.Expression
 
 let testBacktrack1 test_ctxt =
-  let cstr = Constraint.BoolConstr (Comparator ((<),
+  let cstr = Constraint.BoolConstr (Comparator ((~<),
                                             (Const 1),
                                             (Const 2))) in
   assert_equal (Solver.backtrack [] [cstr]) true
 
 let testBacktrack2 test_ctxt =
-  let cstr1 = Constraint.BoolConstr (Comparator ((<),
+  let cstr1 = Constraint.BoolConstr (Comparator ((~<),
                                              (Const 1),
                                              (Const 2))) in
-  let cstr2 = Constraint.BoolConstr (Comparator ((>),
+  let cstr2 = Constraint.BoolConstr (Comparator ((~>),
                                              (Const 1),
                                              (Const 2))) in
   assert_equal (Solver.backtrack [] [cstr1; cstr2]) false
@@ -20,10 +21,10 @@ let testBacktrack2 test_ctxt =
 let testBacktrack3 test_ctxt =
   let var1 = Variable.create (Domain.fromList [1;2;3;4;5]) in
   let var2 = Variable.create (Domain.fromList [4;5;7]) in
-  let cstr1 = Constraint.BoolConstr (Comparator ((>),
+  let cstr1 = Constraint.BoolConstr (Comparator ((~>),
                                              (Var var2),
                                              (Const 6))) in
-  let cstr2 = Constraint.BoolConstr (Comparator ((=),
+  let cstr2 = Constraint.BoolConstr (Comparator ((~=),
                                              (BinOp ((+),
                                                         (Var var1),
                                                         (Var var2))),

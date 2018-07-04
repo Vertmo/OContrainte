@@ -26,3 +26,6 @@ val print_var : var -> unit
 
 (** Removes a value from the domain of the variable. If there's only one value left in the domain and the variable is unassigned, assigns the variable to that value. Returns true if the domain was changed, false otherwise *)
 val reduceDomain : var -> int -> bool
+
+(** Change the domain of the variable *)
+val setDomain : var -> OCont_domain.dom -> unit

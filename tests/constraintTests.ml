@@ -1,11 +1,12 @@
 open OUnit2
 open OContrainte
+open OContrainte.Operators
 open OContrainte.Expression
 
 let testBoolConstr1 test_ctxt =
   let var1 = Variable.create (Domain.range 1 6) in
   let var2 = Variable.create (Domain.range 4 8) in
-  let cstr = Constraint.BoolConstr (Comparator ((<),
+  let cstr = Constraint.BoolConstr (Comparator ((~<),
                                             (Var var1),
                                             (Var var2))) in
   Variable.assign var1 3;
@@ -15,7 +16,7 @@ let testBoolConstr1 test_ctxt =
 let testBoolConstr2 test_ctxt =
   let var1 = Variable.create (Domain.range 1 6) in
   let var2 = Variable.create (Domain.range 4 8) in
-  let cstr = Constraint.BoolConstr (Comparator ((<),
+  let cstr = Constraint.BoolConstr (Comparator ((~<),
                                             (Var var1),
                                             (Var var2))) in
   Variable.assign var1 5;
@@ -25,7 +26,7 @@ let testBoolConstr2 test_ctxt =
 let testBoolConstr3 test_ctxt =
   let var1 = Variable.create (Domain.range 1 6) in
   let var2 = Variable.create (Domain.range 4 8) in
-  let cstr = Constraint.BoolConstr (Comparator ((<),
+  let cstr = Constraint.BoolConstr (Comparator ((~<),
                                             (Var var1),
                                             (Var var2))) in
   Variable.assign var1 5;
@@ -58,7 +59,7 @@ let testPropagate1 test_ctxt =
 
 let testPropagate2 test_ctxt =
   let var1 = Variable.create (Domain.range 1 6) in
-  let cstr = Constraint.BoolConstr (Comparator ((>), (Var var1), (Const 3))) in
+  let cstr = Constraint.BoolConstr (Comparator ((~>), (Var var1), (Const 3))) in
   assert_equal (Constraint.propagate cstr) true;
   assert_equal (Constraint.propagate cstr) false;
   assert_equal (Variable.value var1) None;
@@ -67,7 +68,7 @@ let testPropagate2 test_ctxt =
 let testPropagate3 test_ctxt =
   let var1 = Variable.create (Domain.range 1 6) and
   var2 = Variable.create (Domain.range 2 4) in
-  let cstr = Constraint.BoolConstr (Comparator ((<=), (Var var1), (Var var2))) in
+  let cstr = Constraint.BoolConstr (Comparator ((~<=), (Var var1), (Var var2))) in
   assert_equal (Constraint.propagate cstr) true;
   assert_equal (Constraint.propagate cstr) false;
   assert_equal (Domain.card (Variable.domain var1)) 3

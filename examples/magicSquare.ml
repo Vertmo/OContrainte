@@ -1,4 +1,5 @@
 open OContrainte
+open OContrainte.Operators
 open OContrainte.Expression
 
 let n = 4
@@ -15,7 +16,7 @@ let () =
   (* Rows equal to magicTotal *)
   for i = 0 to n-1 do
     let row = List.map (fun j -> (List.nth vars (i*n+j))) (Domain.asList (Domain.range 0 n)) in
-    constrs := (Constraint.BoolConstr (Comparator ((=),
+    constrs := (Constraint.BoolConstr (Comparator ((~=),
                                                (MultiOp ((List.fold_left (+) 0),
                                                             (List.map (fun v -> Var v) row))),
                                                (Const magicTotal))))::!constrs
@@ -24,7 +25,7 @@ let () =
   (* Columns equal to magicTotal *)
   for i = 0 to n-1 do
     let column = List.map (fun j -> (List.nth vars (j*n+i))) (Domain.asList (Domain.range 0 n)) in
-    constrs := (Constraint.BoolConstr (Comparator ((=),
+    constrs := (Constraint.BoolConstr (Comparator ((~=),
                                                (MultiOp ((List.fold_left (+) 0),
                                                             (List.map (fun v -> Var v) column))),
                                                (Const magicTotal))))::!constrs
@@ -35,11 +36,11 @@ let () =
   and diag2 = List.map (fun i -> (List.nth vars (i*n + (n-1) - i))) (Domain.asList (Domain.range 0 n)) in
 
   constrs := (Constraint.BoolConstr (BinOp ((&&),
-                                            (Comparator ((=),
+                                            (Comparator ((~=),
                                                          (MultiOp ((List.fold_left (+) 0),
                                                                       (List.map (fun v -> Var v) diag1))),
                                                          (Const magicTotal))),
-                                            (Comparator ((=),
+                                            (Comparator ((~=),
                                                          (MultiOp ((List.fold_left (+) 0),
                                                                       (List.map (fun v -> Var v) diag2))),
                                                          (Const magicTotal))))))::!constrs;

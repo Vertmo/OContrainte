@@ -1,6 +1,7 @@
 OContrainte
 OCont_domain
 OCont_variable
+OCont_operators
 OCont_expression
 OCont_constraint
 OCont_solver

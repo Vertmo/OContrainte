@@ -35,3 +35,5 @@ let reduceDomain v n =
           | None -> ());
         true)
   else false
+
+let setDomain v d = v.domain <- d

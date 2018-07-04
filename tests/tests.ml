@@ -4,6 +4,7 @@ let suite =
   "suite">:::[
     test_list DomainTests.suite;
     test_list VariableTests.suite;
+    test_list OperatorsTest.suite;
     test_list ExpressionTests.suite;
     test_list ConstraintTests.suite;
     test_list SolveTests.suite;
