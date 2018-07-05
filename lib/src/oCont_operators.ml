@@ -15,7 +15,15 @@ let (~=) = {
 
 let (~<>) = {
   f = (<>);
-  propagate = fun d -> d;
+  propagate = fun (d1, d2) ->
+    ((if (card d2) = 1 then match (min d2) with
+         | Some n -> remove d1 n
+         | _ -> d1 (* Should not happen *)
+       else d1),
+     (if (card d1) = 1 then match (min d1) with
+         | Some n -> remove d2 n
+         | _ -> d2 (* Should not happen *)
+      else d2));
 }
 
 let (~<) = {

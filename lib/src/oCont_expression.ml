@@ -42,7 +42,7 @@ let rec propagate : type a. a expr -> bool = function e -> match e with
   | Comparator (c, e1, e2) -> (match (e1, e2) with
       | ((Var v1), (Var v2)) ->
         let (dom1, dom2) = c.propagate (domain v1, domain v2) in
-        let changed = (card dom1) < (card (domain v1)) || (card dom1) < (card (domain v1)) in
+        let changed = (card dom1) < (card (domain v1)) || (card dom2) < (card (domain v2)) in
         setDomain v1 dom1; setDomain v2 dom2;
         changed
       | ((Var v), _) when allAssigned e2 ->

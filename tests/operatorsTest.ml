@@ -22,8 +22,15 @@ let testPropagateInf test_ctxt =
   assert_equal (asList dom1) [1;2;3];
   assert_equal (asList dom2) [3;4]
 
+let testPropagateDiff test_ctxt =
+  let dom1 = (range 1 2) and dom2 = (range 1 7) in
+  let (dom1, dom2) = (~<>).propagate (dom1, dom2) in
+  assert_equal (asList dom1) [1];
+  assert_equal (asList dom2) [2;3;4;5;6]
+
 let suite = [
   "propagateEq">::testPropagateEq;
   "propagateSupEq">::testPropagateSupEq;
   "propagateInf">::testPropagateInf;
+  "propagateDiff">::testPropagateDiff;
 ]
