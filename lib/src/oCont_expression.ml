@@ -7,7 +7,7 @@ type 'a expr = Const : 'a -> 'a expr (** constant *)
              | MultiOp : ('a list -> 'a) * 'a expr list -> 'a expr (** reduce (+) 0, ... *)
              | Comparator : (int -> int -> bool) * int expr * int expr -> bool expr (** (=), (<=), ... *)
 
-let removeDuplicates l = List.fold_left (fun xs x -> if List.mem x xs then xs else x::xs) [] l
+let removeDuplicates l = List.fold_left (fun xs x -> if List.memq x xs then xs else x::xs) [] l
 
 let rec allVars : type a. a expr -> var list = function e -> match e with
   | Const _ -> []
