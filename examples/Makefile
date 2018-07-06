@@ -1,4 +1,4 @@
-FOLDERS = nqueens sendMoreMoney sudoku
+FOLDERS = nqueens sendMoreMoney sudoku cycle
 
 compile:
 	ocamlbuild -I lib/src magicSquare.byte

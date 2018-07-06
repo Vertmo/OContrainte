@@ -14,7 +14,7 @@ let assign v n =
   then v.value <- Some n
   else invalid_arg ""
 
-let unassign v = v.value <- None
+let unassign v = if card v.domain > 1 then v.value <- None
 
 let isAssigned v = match v.value with
   | None -> false
