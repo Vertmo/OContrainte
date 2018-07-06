@@ -14,7 +14,7 @@ let assign v n =
   then v.value <- Some n
   else invalid_arg ""
 
-let unassign v = if card v.domain > 1 then v.value <- None
+let unassign v = v.value <- None
 
 let isAssigned v = match v.value with
   | None -> false
@@ -26,12 +26,14 @@ let print_var v = match v.value with
   | Some n -> ()
   | None -> ()
 
+let setDomain v d =
+  v.domain <- d;
+  if (card v.domain = 1) then match min v.domain with
+    | Some n -> assign v n
+    | None -> ()
+
 let reduceDomain v n =
   let dom2 = remove v.domain n in
   if card dom2 < card v.domain
-  then (v.domain <- dom2;
-        (if (card v.domain = 1) then match min v.domain with
-          | Some n -> assign v n
-          | None -> ());
-        true)
+  then (setDomain v dom2; true)
   else false

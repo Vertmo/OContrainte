@@ -1,5 +1,6 @@
 open OUnit2
 open OContrainte
+open OContrainte.Operators
 open OContrainte.Expression
 
 (* allVars tests *)
@@ -9,13 +10,13 @@ let testAllVars2 test_ctxt = assert_equal (allVars (Var (Variable.create (Domain
 
 let testAllVars3 test_ctxt = assert_equal (allVars (Const true)) []
 
-let testAllVars4 test_ctxt = let expr = Comparator ((>), (Var (Variable.create (Domain.range 1 3))), (Var (Variable.create (Domain.range 2 4)))) in
+let testAllVars4 test_ctxt = let expr = Comparator ((~>), (Var (Variable.create (Domain.range 1 3))), (Var (Variable.create (Domain.range 2 4)))) in
   assert_equal (List.length (allVars expr)) 2
 
 let testAllVars5 test_ctxt =
   let var1 = Variable.create (Domain.range 1 3) and
   var2 = Variable.create (Domain.range 1 4) in
-  let expr = (Comparator ((<), ((BinOp ((+), (Var var1), (Var var2)))), (Var var2))) in
+  let expr = (Comparator ((~<), ((BinOp ((+), (Var var1), (Var var2)))), (Var var2))) in
   assert_equal (List.length (allVars expr)) 2
 
 (* eval tests *)
@@ -42,7 +43,7 @@ let testEval2 test_ctxt =
 let testEval3 test_ctxt =
   let var1 = Variable.create (Domain.range 1 4) in
   let var2 = Variable.create (Domain.range 0 2) in
-  let expr = (Comparator ((>),
+  let expr = (Comparator ((~>),
                           (Var var1),
                           (BinOp ((-),
                                      (Var var1),
@@ -58,7 +59,7 @@ let testEval4 test_ctxt =
   let var2 = Variable.create (Domain.range 4 7) in
   let expr = (BinOp ((&&),
                          (Const true),
-                         (Comparator ((<),
+                         (Comparator ((~<),
                                       (Var var1),
                                       (Var var2))))) in
   Variable.assign var1 3;

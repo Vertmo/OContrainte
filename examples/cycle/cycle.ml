@@ -1,9 +1,10 @@
 open Avr
 open OContrainte
 open OContrainte.Expression
+open OContrainte.Operators
 open OContrainte.Constraint
 
-let n = 3
+let n = 4
 
 let () =
   let g = PIN22 and r = PIN24 in
@@ -14,10 +15,10 @@ let () =
   let cstrs = ref [] in
 
   for i = 0 to n-2 do
-    cstrs := (BoolConstr (Comparator ((<), (Var (List.nth vars i)), (Var (List.nth vars (i+1))))))::!cstrs
+    cstrs := (BoolConstr (Comparator ((~<), (Var (List.nth vars i)), (Var (List.nth vars (i+1))))))::!cstrs
   done;
 
-  cstrs := (BoolConstr (Comparator ((<>), (Var (List.nth vars (n-1))), (Var (List.hd vars)))))::!cstrs;
+  cstrs := (BoolConstr (Comparator ((~<>), (Var (List.nth vars (n-1))), (Var (List.hd vars)))))::!cstrs;
 
   if (Solver.propagate vars !cstrs)
   then digital_write g HIGH

@@ -1,5 +1,6 @@
 open Avr
 open OContrainte
+open OContrainte.Operators
 open OContrainte.Expression
 
 (** https://en.wikipedia.org/wiki/Verbal_arithmetic *)
@@ -20,8 +21,8 @@ let () =
   let constrs = ref [] in
 
   (* Most significative numbers (m and s) are not 0 *)
-  constrs := (Constraint.BoolConstr (Comparator ((<>), (Var m), (Const 0))))::!constrs;
-  constrs := (Constraint.BoolConstr (Comparator ((<>), (Var s), (Const 0))))::!constrs;
+  constrs := (Constraint.BoolConstr (Comparator ((~<>), (Var m), (Const 0))))::!constrs;
+  constrs := (Constraint.BoolConstr (Comparator ((~<>), (Var s), (Const 0))))::!constrs;
 
   (* Each letter has a different value *)
   constrs := (Constraint.AllDifferent (List.map (fun v -> Var v) vars))::!constrs;
@@ -31,7 +32,7 @@ let () =
   and more = List.map (fun v -> Var v) [m;o;r;e]
   and money = List.map (fun v -> Var v) [m;o;n;e;y] in
   let sumBaseTen = (List.fold_left (fun a -> fun e -> 10*a+e) 0) in
-  constrs := (Constraint.BoolConstr (Comparator ((=),
+  constrs := (Constraint.BoolConstr (Comparator ((~=),
                                              (BinOp ((+),
                                                         (MultiOp (sumBaseTen, send)),
                                                         (MultiOp (sumBaseTen, more)))),

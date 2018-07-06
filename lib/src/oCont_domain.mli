@@ -41,3 +41,6 @@ val iter : (int -> unit) -> dom -> unit
 
 (** Checks if the domains contains a value that satisfy a predicate *)
 val exists : (int -> bool) -> dom -> bool
+
+(** Keep on the elements verifying a predicate *)
+val filter : (int -> bool) -> dom -> dom

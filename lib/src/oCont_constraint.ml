@@ -15,33 +15,8 @@ let isConsistent c = match c with
 
 let areConsistent constrs = List.for_all isConsistent constrs
 
-let propagateNode c v = let changed = ref false in
-  OCont_domain.iter (fun n -> assign v n;
-              if (not (isConsistent c)) then changed := reduceDomain v n || !changed;
-              unassign v) (domain v);
-  !changed
-
-
-let propagateArcAux c v1 v2 = let changed = ref false in
-  OCont_domain.iter (fun n1 ->
-      assign v1 n1;
-      if not (OCont_domain.exists
-                (fun n2 -> assign v2 n2; let cons = isConsistent c in unassign v2; cons) (domain v2))
-      then changed := reduceDomain v1 n1 || !changed;
-      unassign v1)
-    (domain v1);
-  !changed
-
-let propagateArc c v1 v2 = let changed = ref false in
-  changed := propagateArcAux c v1 v2 || !changed;
-  changed := propagateArcAux c v2 v1 || !changed;
-  !changed
-
 let propagate c = match c with
-  | BoolConstr b -> (match List.filter (fun v -> not (isAssigned v)) (allVars b) with
-    | v::[] -> propagateNode c v
-    | v1::v2::[] -> propagateArc c v1 v2
-    | _ -> false)
+  | BoolConstr b -> propagate b
   | AllDifferent exprs -> let changed = ref false in
     List.iter (fun e1 ->
         if allAssigned e1 then let n = eval e1 in

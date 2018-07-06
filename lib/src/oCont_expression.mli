@@ -1,6 +1,7 @@
 (** Expression module : describes expressions of variables *)
 
 open OCont_variable
+open OCont_operators
 
 (** Expression that evaluates either to a boolean or an integer *)
 type 'a expr = Const : 'a -> 'a expr (** constant *)
@@ -8,7 +9,7 @@ type 'a expr = Const : 'a -> 'a expr (** constant *)
              | UnOp : ('a -> 'a) * 'a expr -> 'a expr (** (~-), ... *)
              | BinOp : ('a -> 'a -> 'a) * 'a expr * 'a expr -> 'a expr (** +, *, /, -, ... *)
              | MultiOp : ('a list -> 'a) * 'a expr list -> 'a expr (** reduce (+) 0, ... *)
-             | Comparator : (int -> int -> bool) * int expr * int expr -> bool expr (** (=), (<=), ... *)
+             | Comparator : compOp * int expr * int expr -> bool expr (** (~=), (~<=), ... *)
 
 (** All the variables in an expression *)
 val allVars : 'a expr -> var list
@@ -18,3 +19,6 @@ val allAssigned : 'a expr -> bool
 
 (** Evaluate an expression *)
 val eval : 'a expr -> 'a
+
+(** Propagate the exoression *)
+val propagate : 'a expr -> bool
