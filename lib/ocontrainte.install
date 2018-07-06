@@ -8,6 +8,8 @@ lib : [
     "_build/src/oCont_domain.mli"
     "_build/src/oCont_variable.cmi"
     "_build/src/oCont_variable.mli"
+    "_build/src/oCont_operators.cmi"
+    "_build/src/oCont_operators.mli"
     "_build/src/oCont_expression.cmi"
     "_build/src/oCont_expression.mli"
     "_build/src/oCont_constraint.cmi"
