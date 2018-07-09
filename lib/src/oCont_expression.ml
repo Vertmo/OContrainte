@@ -38,7 +38,7 @@ let rec eval : type a. a expr -> a = function e -> match e with
     | None -> raise (Failure "not all variables are assigned in this expr !")
     | Some n -> n
 
-let rec propagate : type a. a expr -> bool = function e -> match e with
+let propagate : type a. a expr -> bool = function e -> match e with
   | Comparator (c, e1, e2) -> (match (e1, e2) with
       | ((Var v1), (Var v2)) ->
         let (dom1, dom2) = c.propagate (domain v1, domain v2) in
