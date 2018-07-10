@@ -47,7 +47,7 @@ let propagate c = match c with
         if allAssigned e1 then let n = eval e1 in
           List.iter (fun e2 -> match e2 with
               | Var v2 when not (isAssigned v2) -> changed := (reduceDomain v2 n) || !changed
-              | _ -> () (* TODO *)) exprs) exprs;
+              | _ -> ()) exprs) exprs;
     !changed
 
 let propagateAll constrs = List.fold_left (fun a c -> propagate c || a) false constrs

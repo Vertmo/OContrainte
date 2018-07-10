@@ -26,12 +26,14 @@ let print_var v = match v.value with
   | Some n -> print_int n
   | None -> print_string "?"
 
+let setDomain v d =
+  v.domain <- d;
+  if (card v.domain = 1) then match min v.domain with
+    | Some n -> assign v n
+    | None -> ()
+
 let reduceDomain v n =
   let dom2 = remove v.domain n in
   if card dom2 < card v.domain
-  then (v.domain <- dom2;
-        (if (card v.domain = 1) then match min v.domain with
-          | Some n -> assign v n
-          | None -> ());
-        true)
+  then (setDomain v dom2; true)
   else false
