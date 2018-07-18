@@ -2,14 +2,17 @@ open Avr
 open OContrainte
 open OContrainte.Expression
 
+
+let g = PIN22 and r = PIN24 and b = PIN26
+
 let n = 5
 
 let () =
-  let g = PIN22 and r = PIN24 and b = PIN26 in
   pin_mode b OUTPUT; digital_write b HIGH;
   pin_mode g OUTPUT; digital_write g LOW;
   pin_mode r OUTPUT; digital_write r LOW;
-  let d = Domain.range 0 n in
+
+  let d = Domain.range 0 (n-1) in
   let vars = List.map (fun _ -> Variable.create d) (Domain.asList d) in
   let constrs = ref [] in
 

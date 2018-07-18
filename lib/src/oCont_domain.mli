@@ -6,7 +6,7 @@ type dom
 (** An empty domain *)
 val empty : dom
 
-(** A domain containing all the integers between start (included) and stop (excluded) *)
+(** A domain containing all the integers between start and stop (both included) *)
 val range : int -> int -> dom
 
 (** Construct a domain from a list of elements *)

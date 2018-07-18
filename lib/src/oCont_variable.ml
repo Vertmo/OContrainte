@@ -32,6 +32,12 @@ let setDomain v d =
     | Some n -> assign v n
     | None -> ()
 
+let setDomain v d =
+  v.domain <- d;
+  if (card v.domain = 1) then match min v.domain with
+    | Some n -> assign v n
+    | None -> ()
+
 let reduceDomain v n =
   let dom2 = remove v.domain n in
   if card dom2 < card v.domain

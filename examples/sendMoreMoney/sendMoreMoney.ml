@@ -6,13 +6,14 @@ open OContrainte.Expression
 (** https://en.wikipedia.org/wiki/Verbal_arithmetic *)
 
 
+let green = PIN22 and red = PIN24 and blue = PIN26
+
 let () =
-  let green = PIN22 and red = PIN24 and blue = PIN26 in
   pin_mode blue OUTPUT; digital_write blue HIGH;
   pin_mode green OUTPUT; digital_write green LOW;
   pin_mode red OUTPUT; digital_write red LOW;
 
-  let dom = Domain.range 0 10 in
+  let dom = Domain.range 0 9 in
   let s = Variable.create dom and e = Variable.create dom and n = Variable.create dom
   and d = Variable.create dom and m = Variable.create dom and o = Variable.create dom
   and r = Variable.create dom and y = Variable.create dom in

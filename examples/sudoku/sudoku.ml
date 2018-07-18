@@ -16,8 +16,9 @@ let blockIndex b i =
 let assignFrame vars x y v = (Variable.assign (List.nth vars (index x y)) v)
 
 let () =
-  let _ = digital_read PIN7 in
-  let d = Domain.range 1 (9+1) in
+  pin_mode g OUTPUT; digital_write g LOW;
+  pin_mode r OUTPUT; digital_write r LOW;
+  let d = Domain.range 1 9 in
   let vars = List.map (fun _ -> Variable.create d) (Domain.asList (Domain.range 0 (9*9))) in
   let constrs = ref [] in
 

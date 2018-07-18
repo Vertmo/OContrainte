@@ -5,7 +5,7 @@ open OContrainte.Expression
 let n = 4
 
 let () =
-  let d = Domain.range 1 (n*n+1) in
+  let d = Domain.range 1 (n*n) in
   let vars = List.map (fun _ -> Variable.create d) (Domain.asList d) in
   let magicTotal = ((n*n*n) + n)/2 in
   let constrs = ref [] in

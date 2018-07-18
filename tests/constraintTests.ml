@@ -45,9 +45,9 @@ let testAllDifferent test_ctxt =
   assert_equal (Constraint.isConsistent cstr) false
 
 let testPropagate1 test_ctxt =
-  let var1 = Variable.create (Domain.range 1 6) and
-  var2 = Variable.create (Domain.range 1 6) and
-  var3 = Variable.create (Domain.range 1 4) in
+  let var1 = Variable.create (Domain.range 1 5) and
+  var2 = Variable.create (Domain.range 1 5) and
+  var3 = Variable.create (Domain.range 1 3) in
   let cstr = Constraint.AllDifferent [Var var1; Var var2; Var var3] in
   Variable.assign var1 3;
   assert_equal (Constraint.propagate cstr) true;
@@ -58,7 +58,7 @@ let testPropagate1 test_ctxt =
   assert_equal (Variable.value var3) (Some 2)
 
 let testPropagate2 test_ctxt =
-  let var1 = Variable.create (Domain.range 1 6) in
+  let var1 = Variable.create (Domain.range 1 5) in
   let cstr = Constraint.BoolConstr (Comparator ((~>), (Var var1), (Const 3))) in
   assert_equal (Constraint.propagate cstr) true;
   assert_equal (Constraint.propagate cstr) false;
@@ -66,8 +66,8 @@ let testPropagate2 test_ctxt =
   assert_equal (Domain.card (Variable.domain var1)) 2
 
 let testPropagate3 test_ctxt =
-  let var1 = Variable.create (Domain.range 1 6) and
-  var2 = Variable.create (Domain.range 2 4) in
+  let var1 = Variable.create (Domain.range 1 5) and
+  var2 = Variable.create (Domain.range 2 3) in
   let cstr = Constraint.BoolConstr (Comparator ((~<=), (Var var1), (Var var2))) in
   assert_equal (Constraint.propagate cstr) true;
   assert_equal (Constraint.propagate cstr) false;

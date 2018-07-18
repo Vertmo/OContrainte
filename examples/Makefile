@@ -1,7 +1,6 @@
 FOLDERS = nqueens sendMoreMoney sudoku cycle
 
 compile:
-	ocamlbuild -I lib/src magicSquare.byte
 	for folder in $(FOLDERS); do ($(MAKE) --no-print-directory -C $$folder); done
 
 clean:
