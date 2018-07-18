@@ -5,7 +5,7 @@ open OContrainte.Constraint
 let n = 200
 
 let () =
-  let dom = Domain.range 1 (n+1) in
+  let dom = Domain.range 1 n in
   let vars = List.map (fun _ -> Variable.create dom) (Domain.asList dom) in
   let cstrs = ref [] in
 

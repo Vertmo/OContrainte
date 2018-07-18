@@ -13,7 +13,7 @@ let adjacent l n1 n2 =
   BoolConstr (Comparator ((<>), (Var (List.nth l (n1-1))), (Var (List.nth l (n2-1)))))
 
 let () =
-  let dom = range 1 (k+1) in
+  let dom = range 1 k in
   let vars = List.init 5 (fun _ -> Variable.create dom) in
 
   let cstrs = [(adjacent vars 1 2);

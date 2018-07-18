@@ -8,7 +8,7 @@ open OContrainte.Constraint
 let order = 7 and length = 25 (* We want to find the optimal golomb rulers, but we already know it's order *)
 
 let () =
-  let dom = range 0 (length+1) in
+  let dom = range 0 length in
   let vars = List.init order (fun _ -> Variable.create dom) in
 
   let pairs = List.fold_left (fun a v1 -> a@(List.fold_left (fun a v2 -> if v1 == v2 then a else (v1, v2)::a) [] vars)) [] vars in

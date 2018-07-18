@@ -4,7 +4,7 @@ open OContrainte.Expression
 (** https://en.wikipedia.org/wiki/Verbal_arithmetic *)
 
 let () =
-  let dom = Domain.range 0 10 in
+  let dom = Domain.range 0 9 in
   let s = Variable.create dom and e = Variable.create dom and n = Variable.create dom
   and d = Variable.create dom and m = Variable.create dom and o = Variable.create dom
   and r = Variable.create dom and y = Variable.create dom in
