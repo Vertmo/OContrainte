@@ -37,7 +37,7 @@ let min d = match d with
   | Arr a -> Some a.(0)
 
 let rec max d = match d with
-  | Range (start, stop) -> Some (stop-1)
+  | Range (start, stop) -> Some stop
   | Arr [||] -> None
   | Arr a -> Some a.(Array.length a - 1)
 
