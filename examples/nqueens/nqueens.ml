@@ -2,7 +2,6 @@ open Avr
 open OContrainte
 open OContrainte.Expression
 
-
 let g = PIN22 and r = PIN24 and b = PIN26
 
 let n = 5

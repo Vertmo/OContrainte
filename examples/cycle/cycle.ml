@@ -4,13 +4,14 @@ open OContrainte.Expression
 open OContrainte.Operators
 open OContrainte.Constraint
 
+let g = PIN22 and r = PIN24
+
 let n = 4
 
 let () =
-  let g = PIN22 and r = PIN24 in
   pin_mode g OUTPUT; digital_write g LOW;
   pin_mode r OUTPUT; digital_write r LOW;
-  let dom = Domain.range 1 (n+1) in
+  let dom = Domain.range 1 n in
   let vars = List.map (fun _ -> Variable.create dom) (Domain.asList dom) in
   let cstrs = ref [] in
 

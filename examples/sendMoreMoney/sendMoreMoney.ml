@@ -3,10 +3,9 @@ open OContrainte
 open OContrainte.Operators
 open OContrainte.Expression
 
-(** https://en.wikipedia.org/wiki/Verbal_arithmetic *)
-
-
 let green = PIN22 and red = PIN24 and blue = PIN26
+
+(** https://en.wikipedia.org/wiki/Verbal_arithmetic *)
 
 let () =
   pin_mode blue OUTPUT; digital_write blue HIGH;
