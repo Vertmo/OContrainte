@@ -1,8 +1,11 @@
 (*                                Graph coloring                                   *)
 (* Example taken from : https://www.cpp.edu/~jrfisher/www/prolog_tutorial/2_1.html *)
 
+open Avr
+
 open OContrainte
 open OContrainte.Domain
+open OContrainte.Operators
 open OContrainte.Expression
 open OContrainte.Constraint
 
@@ -10,9 +13,13 @@ open OContrainte.Constraint
 let k = 4
 
 let adjacent l n1 n2 =
-  BoolConstr (Comparator ((<>), (Var (List.nth l (n1-1))), (Var (List.nth l (n2-1)))))
+  BoolConstr (Comparator ((~<>), (Var (List.nth l (n1-1))), (Var (List.nth l (n2-1)))))
+
+let g = PIN22 and r = PIN24
 
 let () =
+  pin_mode g OUTPUT; digital_write g LOW;
+  pin_mode r OUTPUT; digital_write r LOW;
   let dom = range 1 k in
   let vars = List.init 5 (fun _ -> Variable.create dom) in
 
@@ -26,5 +33,5 @@ let () =
                (adjacent vars 4 5)] in
 
   if Solver.solve vars cstrs
-  then print_endline "Found a solution !"
-  else print_endline "Did not find a solution..."
+  then digital_write g HIGH
+  else digital_write r HIGH
