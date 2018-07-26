@@ -44,7 +44,7 @@ let () =
                                                                       (List.map (fun v -> Var v) diag2))),
                                                          (Const magicTotal))))))::!constrs;
 
-  if not (Solver.solve vars !constrs)
+  if not (Solver.solve ?varStrat:(Some Strategies.smallestDomain) vars !constrs)
   then print_endline "We didn't find a solution..."
   else begin
     print_endline "We found a solution :";

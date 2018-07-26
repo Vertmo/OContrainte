@@ -23,14 +23,10 @@ let rec backtrack vars constrs = match vars with
     if reus then true else (unassign t; false)
   | [] -> areConsistent constrs
 
-let chooseVar vars = match vars with
-  | [] -> (None, [])
-  | t::q -> (Some t, q)
-
-let rec solve vars constrs = match vars with
+let rec solve ?varStrat:(varStrat = OCont_strategies.firstVar) vars constrs = match vars with
   | [] -> areConsistent constrs
   | _ -> ((propagate vars constrs) && areConsistent constrs) ||
-         let (v, vars) = chooseVar vars in match v with
+         let (v, vars) = varStrat vars in match v with
          | Some v -> let backup = List.map copy vars in
-           exists (fun n -> assign v n; if (areConsistent constrs) && (solve vars constrs) then true else (List.iter2 resetFromCopy vars backup; false)) (domain v)
+           exists (fun n -> assign v n; if (areConsistent constrs) && (solve vars constrs ?varStrat:(Some varStrat)) then true else (List.iter2 resetFromCopy vars backup; false)) (domain v)
          | None -> false

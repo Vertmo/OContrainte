@@ -47,7 +47,7 @@ let testPropagate1 test_ctxt =
   assert_equal (Domain.card (Variable.domain var3)) 2
 
 let testSolve test_ctxt =
-  let var1 = Variable.create (Domain.range 1 2) and
+  let var1 = Variable.create (Domain.range 1 1) and
   var2 = Variable.create (Domain.range 1 2) and
   var3 = Variable.create (Domain.range 2 3) in
   let cstr1 = Constraint.AllDifferent [Var var1; Var var2] and

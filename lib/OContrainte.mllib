@@ -4,3 +4,4 @@ OCont_variable
 OCont_expression
 OCont_constraint
 OCont_solver
+OCont_strategies

@@ -9,6 +9,9 @@ val create : OCont_domain.dom -> var
 (** Get the domain of the variable *)
 val domain : var -> OCont_domain.dom
 
+(** Get the cardinality of the domain of the variable *)
+val card : var -> int
+
 (** Assign a variable to an integer value *)
 val assign : var -> int -> unit
 

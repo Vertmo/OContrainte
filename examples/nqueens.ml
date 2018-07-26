@@ -1,7 +1,7 @@
 open OContrainte
 open OContrainte.Expression
 
-let n = 8
+let n = 15
 
 let () =
   let d = Domain.range 0 (n-1) in
