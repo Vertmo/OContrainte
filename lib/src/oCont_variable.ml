@@ -37,3 +37,7 @@ let reduceDomain v n =
   if card dom2 < card v.domain
   then (setDomain v dom2; true)
   else false
+
+let copy v = { domain = v.domain; value = v.value }
+
+let resetFromCopy v1 v2 = v1.domain <- v2.domain; v1.value <- v2.value

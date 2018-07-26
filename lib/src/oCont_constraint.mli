@@ -18,7 +18,6 @@ val propagate : constr -> bool
 (** Propagates every constraint; returns true if at least one propagation reduced the domain of one of the variables *)
 val propagateAll : constr list -> bool
 
-
 (** Propagate by node consistency of a variable in a constraint *)
 val propagateNode : constr -> OCont_variable.var -> bool
 

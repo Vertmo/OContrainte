@@ -29,3 +29,9 @@ val reduceDomain : var -> int -> bool
 
 (** Change the domain of the variable *)
 val setDomain : var -> OCont_domain.dom -> unit
+
+(** Copy a variable *)
+val copy : var -> var
+
+(** [resetFromCopy v1 v2] sets domain and value of v1 to domain and value of v2 *)
+val resetFromCopy : var -> var -> unit
