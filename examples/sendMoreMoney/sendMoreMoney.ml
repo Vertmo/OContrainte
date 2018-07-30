@@ -39,5 +39,5 @@ let () =
                                              (MultiOp (sumBaseTen, money)))))::!constrs;
 
   if Solver.backtrack vars !constrs
-  then digital_write green LOW
-  else digital_write red LOW
+  then digital_write green HIGH
+  else digital_write red HIGH
