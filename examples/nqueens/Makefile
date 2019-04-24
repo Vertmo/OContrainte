@@ -1,14 +1,12 @@
-include ../../OMicroB/etc/Makefile.conf
-
 TARGETS = nqueens.byte nqueens.c nqueens.elf nqueens.avr nqueens.hex
 
 all: $(TARGETS)
 
 $(TARGETS): nqueens.ml
-	$(BIN)/omicrob -v nqueens.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -stack-size 200 -heap-size 1600
+	omicrob -v nqueens.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -circuitppx -device microbit -stack-size 150 -heap-size 300
 
 flash: nqueens.hex
-	$(BIN)/omicrob -flash -sudo $<
+	omicrob -flash -sudo $<
 
 simul: nqueens.elf
 	./$< '../../OMicroB/bin/omicrob_pin_simulator' '../../OMicroB/bin/omicrob_circuit_simulator circuit.txt'

@@ -1,14 +1,12 @@
-include ../../OMicroB/etc/Makefile.conf
-
 TARGETS = sendMoreMoney.byte sendMoreMoney.c sendMoreMoney.elf sendMoreMoney.avr sendMoreMoney.hex
 
 all: $(TARGETS)
 
 $(TARGETS): sendMoreMoney.ml
-	$(BIN)/omicrob -v sendMoreMoney.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -stack-size=256 -heap-size=1000
+	omicrob -v sendMoreMoney.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -circuitppx -device microbit -stack-size=250 -heap-size=400
 
 flash: sendMoreMoney.hex
-	$(BIN)/omicrob -flash -sudo $<
+	omicrob -flash -sudo $<
 
 simul: sendMoreMoney.elf
 	./$< '../../OMicroB/bin/omicrob_pin_simulator' '../../OMicroB/bin/omicrob_circuit_simulator circuit.txt'

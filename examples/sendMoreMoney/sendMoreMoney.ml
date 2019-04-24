@@ -1,16 +1,15 @@
-open Avr
 open OContrainte
 open OContrainte.Operators
 open OContrainte.Expression
 
-let green = PIN22 and red = PIN24 and blue = PIN26
+let%component GreenLed = Circuits.MakeLed(connectedPin = PIN0)
+let%component RedLed = Circuits.MakeLed(connectedPin = PIN1)
 
 (** https://en.wikipedia.org/wiki/Verbal_arithmetic *)
 
 let () =
-  pin_mode blue OUTPUT; digital_write blue HIGH;
-  pin_mode green OUTPUT; digital_write green LOW;
-  pin_mode red OUTPUT; digital_write red LOW;
+  GreenLed.init (); RedLed.init ();
+  GreenLed.off (); RedLed.off ();
 
   let dom = Domain.range 0 9 in
   let s = Variable.create dom and e = Variable.create dom and n = Variable.create dom
@@ -39,5 +38,5 @@ let () =
                                              (MultiOp (sumBaseTen, money)))))::!constrs;
 
   if Solver.backtrack vars !constrs
-  then digital_write green HIGH
-  else digital_write red HIGH
+  then GreenLed.on ()
+  else RedLed.on ()
