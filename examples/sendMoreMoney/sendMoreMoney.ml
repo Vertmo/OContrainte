@@ -37,6 +37,6 @@ let () =
                                                         (MultiOp (sumBaseTen, more)))),
                                              (MultiOp (sumBaseTen, money)))))::!constrs;
 
-  if Solver.backtrack vars !constrs
+  if Solver.solve ?varStrat:(Some Strategies.smallestDomain) vars !constrs
   then GreenLed.on ()
   else RedLed.on ()

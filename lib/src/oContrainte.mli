@@ -14,3 +14,4 @@ module Operators = OCont_operators
 module Expression = OCont_expression
 module Constraint = OCont_constraint
 module Solver = OCont_solver
+module Strategies = OCont_strategies

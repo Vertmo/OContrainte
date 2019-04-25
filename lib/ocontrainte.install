@@ -16,4 +16,6 @@ lib : [
     "_build/src/oCont_constraint.mli"
     "_build/src/oCont_solver.cmi"
     "_build/src/oCont_solver.mli"
+    "_build/src/oCont_strategies.cmi"
+    "_build/src/oCont_strategies.mli"
 ]
