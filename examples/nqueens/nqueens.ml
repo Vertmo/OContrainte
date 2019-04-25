@@ -4,7 +4,7 @@ open OContrainte.Expression
 let%component GreenLed = Circuits.MakeLed(connectedPin = PIN0)
 let%component RedLed = Circuits.MakeLed(connectedPin = PIN1)
 
-let n = 5
+let n = 20
 
 let () =
   GreenLed.init (); RedLed.init ();
@@ -21,7 +21,10 @@ let () =
   constrs := (Constraint.AllDifferent (List.mapi (fun i v -> (BinOp ((+),(Var v),(Const i)))) vars))::!constrs;
   constrs := (Constraint.AllDifferent (List.mapi (fun i v -> (BinOp ((-),(Var v),(Const i)))) vars))::!constrs;
 
-  (* Variable.assign (List.nth vars 0) 3; *)
+  let startTime = millis () in
   if Solver.backtrack vars !constrs
-  then GreenLed.on ()
+  then (
+    Serial.write ("Fini en "^(string_of_int (millis () - startTime))^"ms");
+    GreenLed.on ()
+  )
   else RedLed.on ()

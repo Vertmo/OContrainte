@@ -1,12 +1,8 @@
-TARGETS = nqueens.byte nqueens.c nqueens.elf nqueens.avr nqueens.hex
+build: nqueens.ml
+	omicrob -v nqueens.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -circuitppx -device wemos-d1-mini -stack-size 600 -heap-size 2000
 
-all: $(TARGETS)
-
-$(TARGETS): nqueens.ml
-	omicrob -v nqueens.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -circuitppx -device microbit -stack-size 150 -heap-size 300
-
-flash: nqueens.hex
-	omicrob -flash -sudo $<
+flash: build
+	omicrob -device wemos-d1-mini -flash -sudo $<
 
 simul: nqueens.elf
 	./$< '../../OMicroB/bin/omicrob_pin_simulator' '../../OMicroB/bin/omicrob_circuit_simulator circuit.txt'

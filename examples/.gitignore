@@ -6,3 +6,7 @@
 *.arm_o
 *.arm_elf
 *.combined_hex
+*.esp_elf
+*.esp_o
+*.bin
+*.d
