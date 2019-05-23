@@ -2,7 +2,7 @@ open Avr
 open OContrainte
 open OContrainte.Expression
 
-let g = PIN11 and r = PIN10
+let g = PIN0 and r = PIN1
 
 (** Get index for coordinates (x,y) in the grid *)
 let index x y = y * 9 + x

@@ -1,12 +1,8 @@
-TARGETS = sudoku.byte sudoku.c sudoku.elf sudoku.avr sudoku.hex
+build: sudoku.ml
+	omicrob -v sudoku.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -device wemos-d1-mini -stack-size 1024 -heap-size 22000
 
-all: $(TARGETS)
-
-$(TARGETS): sudoku.ml
-	omicrob -v sudoku.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -stack-size 512 -heap-size 2048
-
-flash: sudoku.hex
-	omicrob -flash -sudo $<
+flash: sudoku.esp_elf
+	omicrob -flash -sudo -device wemos-d1-mini $<
 
 simul: sudoku.elf
 	./$< '../../OMicroB/bin/omicrob_pin_simulator' '../../OMicroB/bin/omicrob_circuit_simulator circuit.txt'

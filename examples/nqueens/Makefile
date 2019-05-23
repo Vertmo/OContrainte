@@ -1,7 +1,7 @@
 build: nqueens.ml
-	omicrob -v nqueens.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -circuitppx -device wemos-d1-mini -stack-size 600 -heap-size 2000
+	omicrob -v nqueens.ml -mlopts lib/_build/OContrainte.cma,-I,lib/_build/src -circuitppx -device wemos-d1-mini -stack-size 600 -heap-size 7000
 
-flash: build
+flash: nqueens.esp_elf
 	omicrob -device wemos-d1-mini -flash -sudo $<
 
 simul: nqueens.elf
